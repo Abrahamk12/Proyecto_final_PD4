@@ -13,5 +13,12 @@ def handle_context():
 def index():
     return render_template("index.html")
 
+@app.route('/logout', methods=['GET'])
+@app.route('/logout/', methods=['GET'])
+def logout():
+    if request.method == 'GET':
+        session.clear()
+        return redirect("/")
+
 if __name__ == '__main__':
     app.run(debug=True)

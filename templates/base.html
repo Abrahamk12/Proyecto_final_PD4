@@ -13,6 +13,23 @@
         <div name = "Logo">
             <img src="" alt="">
         </div>
+        <div>
+            <ul>
+                <li><a href="/" class="liga_pie">Inicio</a></li>
+                {% if session['logged_in'] == True %}
+                <li><a href="/logout/" class="liga_pie">Logout</a></li>
+                {% else %}
+                <li><a href="/login/" class="liga_pie">Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
+{% block body %}
+{% endblock %}
 </body>
+<footer>
+    {% block footer %}
+    
+    {% endblock %}
+    </footer>
 </html>
