@@ -4,6 +4,8 @@ from passlib.hash import sha256_crypt
 import os
 
 app = Flask(__name__)
+archivo_usuarios = 'usuarios.csv'
+diccionario_usuarios = lee_diccionario_csv(archivo_usuarios)
 
 @app.context_processor
 def handle_context():
