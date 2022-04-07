@@ -1,4 +1,5 @@
-id,usuario,password
-0,Abraham,1234
-1,Julian,2711
-2,Victor,1111
+usuario,usuario,id,password,n_competo,direccion,celular
+Abraham,Abraham,0,1234,,,
+Julian,Julian,1,2711,,,
+Victor,Victor,2,1111,,,
+Pizzas,Pizzas,,$5$rounds=535000$lA2ikLm0/klPE/s/$lYm4aEOKkFOvwBF0t9Bqvv6qatM2ggtD5w.OwHjfOI7,Potaos,potato's,39089

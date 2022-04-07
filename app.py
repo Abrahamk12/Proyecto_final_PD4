@@ -53,6 +53,27 @@ def new_user():
     if request.method == 'GET':
         msg = ''
         return render_template('new_user.html',mensaje=msg)
+    if request.method == 'POST':
+                valor = request.form['enviar']
+                if valor == 'Enviar':
+                    usuario =  request.form['usuario']
+                    n_competo  =  request.form['n_competo']
+                    direccion    =  request.form['direccion']
+                    celular  =   request.form['celular']
+                    password  =   request.form['password']
+                    password_cryp = sha256_crypt.hash(password)
+                    id = print()
+                    if usuario not in diccionario_usuarios:
+                        diccionario_usuarios[usuario] = {
+                            #'id' : id,
+                            'usuario': usuario,
+                            'password': password_cryp,
+                            'n_competo'  : n_competo,
+                            'direccion': direccion,
+                            'celular': celular
+                        }
+                    graba_diccionario(diccionario_usuarios,'usuario',archivo_usuarios)
+                return redirect('/')
 
 @app.route('/a_new_user', methods=['GET','POST'])
 @app.route('/a_new_user/', methods=['GET','POST'])
