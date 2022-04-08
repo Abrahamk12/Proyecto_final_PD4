@@ -13,6 +13,7 @@
         <div name = "Logo">
             <img src="" alt="">
         </div>
+        
         <div>
             <ul>
                 <li><a href="/" class="liga_pie">Inicio</a></li>
@@ -22,7 +23,17 @@
                 <li><a href="/login/" class="liga_pie">Login</a></li>
                 {% endif %}
             </ul>
+            {% if 'usuario' in session  %}
+                 <div><h3>{{session['usuario']}}</h3></div>
+                 {% set imagen = "/static/avatar/%s.png" % session['usuario'] %}
+                 {% if os.path.exists("."+imagen) %}
+                 <div><img src="{{imagen}}" width="50"></div>
+                 {% else %}
+                 <div><img src="/static/avatar/avatar.png" width="50"></div>
+                 {% endif %} 
+            {% endif %}
         </div>
+
     </div>
 {% block body %}
 {% endblock %}

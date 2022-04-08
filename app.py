@@ -30,6 +30,7 @@ def login():
                 password_db = diccionario_usuarios[usuario]['password'] # password guardado
                 password_forma = request.form['password'] #password presentado
                 verificado = sha256_crypt.verify(password_forma,password_db)
+                #"""
                 if (verificado == True):
                     session['usuario'] = usuario
                     session['logged_in'] = True
@@ -42,9 +43,10 @@ def login():
                 else:
                     msg = f'El password de {usuario} no corresponde'
                     return render_template('login.html',mensaje=msg)
+                #"""
             else:
                 msg = f'usuario {usuario} no existe'
-                return render_template('login.html',mensaje=msg)
+                return render_template('new_user.html',mensaje=msg)
     #"""
 
 @app.route('/new_user', methods=['GET','POST'])
@@ -62,11 +64,10 @@ def new_user():
                     celular  =   request.form['celular']
                     password  =   request.form['password']
                     password_cryp = sha256_crypt.hash(password)
-                    id = print()
+                    id = 0
                     if usuario not in diccionario_usuarios:
                         diccionario_usuarios[usuario] = {
-                            #'id' : id,
-                            'usuario': usuario,
+                            'id' : id,
                             'password': password_cryp,
                             'n_competo'  : n_competo,
                             'direccion': direccion,
