@@ -63,7 +63,7 @@ def login():
                     else:
                         #El chiste es ver si es un admin o un trabajador, dependiendo de que lo mande a la pag
                         #no se me ocurre como hacerlo :v
-                        roll = 
+                        roll = ""
                         if roll in "admin":
                             return redirect("/a_opciones.html")
                         if roll in "trabajador":
