@@ -4,6 +4,7 @@ from passlib.hash import sha256_crypt
 import os
 
 app = Flask(__name__)
+app.secret_key = "Moltr3s_3l_Gu4jolot3_M4cías"
 archivo_usuarios = 'usuarios.csv'
 diccionario_usuarios = lee_diccionario_csv(archivo_usuarios)
 
