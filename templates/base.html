@@ -29,8 +29,8 @@
                  {% if os.path.exists("."+imagen) %}
                  <div><img src="{{imagen}}" width="50"></div>
                  {% else %}
-                 <div><img src="/static/avatar/avatar.png" width="50"></div>
-                 {% endif %} 
+                 <div><img src="/static/avatar.png" width="50"></div>
+                {% endif %} 
             {% endif %}
         </div>
 
@@ -40,7 +40,7 @@
 </body>
 <footer>
     {% block footer %}
-    
+    <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by Freepik - Flaticon</a>
     {% endblock %}
     </footer>
 </html>
