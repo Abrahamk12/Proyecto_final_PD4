@@ -4,9 +4,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Iniciar Sesión</title>
 </head>
 <body>
+    <div>
+        <a for="regresar" href="/"> <img src="/static/Regresar.png" alt="" width="2.5%" height="2.5%"> </a>
+    </div>
+    <div>
+        <form action="" method="POST">
+            <div>
+            <label for="usuario">Username:</label>
+            <input type="text" id="usuario" name="usuario" >
+            </div>
+            <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+            </div>
+            <a href="/new_user">Registrarse</a>
+            <input type="submit" name="enviar" value="Enviar">
+        </form>
+    </div>
     
 </body>
 </html>
