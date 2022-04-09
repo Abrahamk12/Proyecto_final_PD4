@@ -45,6 +45,20 @@ def obten_campos(diccionario:dict,llave_d:str)->list:
     lista.extend(lista_campos)
     return lista
 
+def id_sum(archivo:str)->int:
+    #Lee un archivo CSV y regresa un diccionario de diccionarios
+    id_p = 0
+    try:
+        with open(archivo,'r',encoding='utf-8') as fh:
+            csv_reader = csv.DictReader(fh)
+            for renglon in csv_reader:
+                llave = renglon['id']
+                id_p=llave
+            id_p += 1
+    except IOError:
+        print(f"No se pudo leer el archivo {archivo}")
+    return id_p
+
 def graba_diccionario(diccionario:dict,llave_dict:str,archivo:str):
     with open(archivo,'w') as fh: #fh = file handle
         lista_campos = obten_campos(diccionario, llave_dict)
@@ -58,3 +72,7 @@ def graba_diccionario(diccionario:dict,llave_dict:str,archivo:str):
             renglones.append(d)
         dw.writerows(renglones)
 #'''
+
+def cambiar_clave(diccionario:dict,llave_dict:str,archivo:str)->None:
+    #Configuralo para modificar la contraseña
+    print()

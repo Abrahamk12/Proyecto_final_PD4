@@ -1,11 +1,11 @@
-usuario,id,password,n_competo,direccion,celular
+id,usuario,password,n_competo,direccion,celular
 ,,,,,
-Abraham,0,1234,,,
+0,Abraham,1234,,,
 ,,,,,
-Julian,1,2711,,,
+1,Julian,2711,,,
 ,,,,,
-Victor,2,1111,,,
+2,Victor,1111,,,
 ,,,,,
-Pizzas,,$5$rounds=535000$lA2ikLm0/klPE/s/$lYm4aEOKkFOvwBF0t9Bqvv6qatM2ggtD5w.OwHjfOI7,Potaos,potato's,39089
+,Pizzas,$5$rounds=535000$lA2ikLm0/klPE/s/$lYm4aEOKkFOvwBF0t9Bqvv6qatM2ggtD5w.OwHjfOI7,Potaos,potato's,39089
 ,,,,,
-Pizzass,0,$5$rounds=535000$jfl8Tay7zOl7OL7G$FmEjGB0R8yVQVD3PVqWDuWmK6u9WBWkDEcg4VWpy3uC,Potaos,potato's,39089
+0,Pizzass,$5$rounds=535000$jfl8Tay7zOl7OL7G$FmEjGB0R8yVQVD3PVqWDuWmK6u9WBWkDEcg4VWpy3uC,Potaos,potato's,39089
