@@ -1,5 +1,5 @@
 from flask import Flask, redirect, render_template, request, session
-from funciones import graba_diccionario, id_sum, lee_diccionario_csv, cambiar_clave
+from funciones import graba_diccionario, lee_diccionario_csv, cambiar_clave, encriptar
 from passlib.hash import sha256_crypt
 import os
 
@@ -49,8 +49,10 @@ def login():
                     return render_template('login.html',mensaje=msg)
                 #"""
             if usuario in diccionario_usuarios_a:
-                password_db = diccionario_usuarios_a[usuario]['password'] # password guardado
+                password_db = diccionario_usuarios_a[usuario]['password'] # password guardad
                 password_forma = request.form['password'] #password presentado
+                encriptar(password_db,archivo_usuarios_a)
+                password_db = diccionario_usuarios_a[usuario]['password'] # password guardad
                 verificado = sha256_crypt.verify(password_forma,password_db)
                 #"""
                 if (verificado == True):
@@ -63,11 +65,13 @@ def login():
                     else:
                         #El chiste es ver si es un admin o un trabajador, dependiendo de que lo mande a la pag
                         #no se me ocurre como hacerlo :v
-                        roll = ""
-                        if roll in "admin":
-                            return redirect("/a_opciones.html")
-                        if roll in "trabajador":
-                            return redirect("/t_opciones.html")
+                        roll = diccionario_usuarios_a[usuario]['roll']
+                        if roll == "admin":
+                            return redirect("/a_opciones")
+                        if roll == "trabajador":
+                            return redirect("/t_opciones")
+                        else:
+                            return redirect("/")
                 else:
                     msg = f'El password de {usuario} no corresponde'
                     return render_template('login.html',mensaje=msg)
@@ -82,7 +86,6 @@ def new_user():
     if request.method == 'POST':
         valor = request.form['enviar']
         if valor == 'Enviar':
-            id = id_sum(diccionario_usuarios)
             usuario = request.form['usuario']
             n_competo  = request.form['n_competo']
             direccion = request.form['direccion']
@@ -91,7 +94,6 @@ def new_user():
             password_cryp = sha256_crypt.hash(password)
             if usuario not in diccionario_usuarios:
                 diccionario_usuarios[usuario] = {
-                    'id' : id,
                     'password': password_cryp,
                     'n_competo'  : n_competo,
                     'direccion': direccion,
@@ -109,7 +111,31 @@ def a_new_user():
     if request.method == 'POST':
         valor = request.form['enviar']
         if valor == 'Enviar':
-            id = id_sum(diccionario_usuarios)
+            usuario = request.form['usuario']
+            n_competo  = request.form['n_competo']
+            direccion = request.form['direccion']
+            celular = request.form['celular']
+            password = request.form['password']
+            password_cryp = sha256_crypt.hash(password)
+            if usuario not in diccionario_usuarios:
+                diccionario_usuarios[usuario] = {
+                    'id' : id,
+                    'password': password_cryp,
+                    'n_competo'  : n_competo,
+                    'direccion': direccion,
+                    'celular': celular
+                }
+            graba_diccionario(diccionario_usuarios,'usuario',archivo_usuarios)
+
+@app.route('/restart_password', methods=['GET','POST'])
+@app.route('/restart_password/', methods=['GET','POST'])
+def restart_password():
+    if request.method == 'GET':
+        msg = ''
+        return render_template('restart_password.html',mensaje=msg)
+    if request.method == 'POST':
+        valor = request.form['enviar']
+        if valor == 'Enviar':
             usuario = request.form['usuario']
             password = request.form['password']
             password_cryp = sha256_crypt.hash(password)
@@ -119,12 +145,12 @@ def a_new_user():
                 }
             cambiar_clave(diccionario_usuarios,'usuario',archivo_usuarios)
 
-@app.route('/restart_password', methods=['GET','POST'])
-@app.route('/restart_password/', methods=['GET','POST'])
-def restart_password():
+@app.route('/a_opciones', methods=['GET','POST'])
+@app.route('/a_opciones/', methods=['GET','POST'])
+def a_opciones():
     if request.method == 'GET':
         msg = ''
-        return render_template('restart_password.html',mensaje=msg)
+        return render_template('a_opciones.html',mensaje=msg)
     if request.method == 'POST':
         print()
 
