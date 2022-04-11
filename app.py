@@ -135,15 +135,13 @@ def restart_password():
         return render_template('restart_password.html',mensaje=msg)
     if request.method == 'POST':
         valor = request.form['enviar']
-        if valor == 'Enviar':
-            usuario = request.form['usuario']
-            password = request.form['password']
-            password_cryp = sha256_crypt.hash(password)
+        if valor == 'enviar':
             if usuario in diccionario_usuarios:
-                diccionario_usuarios[usuario] = {
-                    'password': password_cryp
-                }
-            cambiar_clave(diccionario_usuarios,'usuario',archivo_usuarios)
+                usuario = request.form['usuario']
+                password = request.form['password']
+                print("La nueva cotraseña es: ",diccionario_usuarios,"\n")
+                cambiar_clave(usuario,password,archivo_usuarios)
+            return redirect("/")
 
 @app.route('/a_opciones', methods=['GET','POST'])
 @app.route('/a_opciones/', methods=['GET','POST'])
