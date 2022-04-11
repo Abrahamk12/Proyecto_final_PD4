@@ -1,7 +1,6 @@
 import csv
 from passlib.hash import sha256_crypt
 #from Levenshtein import distance
-import pandas as pd  
     
 #'''
 class Usuarios():
