@@ -69,10 +69,9 @@ def cambiar_clave(usuario:str,llave_dict:str,archivo:str)->None:
                 diccionario[llave]=renglon
     except IOError:
         print(f"No se pudo leer el archivo {archivo}")
-    print("Diccionario base: ", diccionario,"\n")
+
     llave_dict_cryp = sha256_crypt.hash(llave_dict)
     diccionario.update({usuario: llave_dict_cryp})
-    print("Diccionario actualizado: ", diccionario,"\n")
     lista_campos = obten_campos(diccionario, llave_dict)
     
     dw = csv.DictWriter(fh,lista_campos)

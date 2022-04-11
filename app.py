@@ -135,13 +135,10 @@ def restart_password():
         return render_template('restart_password.html',mensaje=msg)
     if request.method == 'POST':
         valor = request.form['enviar']
-        if valor == 'enviar':
+        if valor == 'Enviar':
             usuario = request.form['usuario']
-            print("Es el usuario: ", usuario, "\n")
             password = request.form['password']
-            print("La nueva cotraseña es: ",password,"\n")
             if usuario in diccionario_usuarios:
-                print("\nSi entro prro\n")
                 cambiar_clave(usuario,password,archivo_usuarios)
         return redirect("/")
 
