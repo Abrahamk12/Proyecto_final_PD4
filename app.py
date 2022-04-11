@@ -136,12 +136,14 @@ def restart_password():
     if request.method == 'POST':
         valor = request.form['enviar']
         if valor == 'enviar':
+            usuario = request.form['usuario']
+            print("Es el usuario: ", usuario, "\n")
+            password = request.form['password']
+            print("La nueva cotraseña es: ",password,"\n")
             if usuario in diccionario_usuarios:
-                usuario = request.form['usuario']
-                password = request.form['password']
-                print("La nueva cotraseña es: ",diccionario_usuarios,"\n")
+                print("\nSi entro prro\n")
                 cambiar_clave(usuario,password,archivo_usuarios)
-            return redirect("/")
+        return redirect("/")
 
 @app.route('/a_opciones', methods=['GET','POST'])
 @app.route('/a_opciones/', methods=['GET','POST'])
