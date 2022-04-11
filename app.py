@@ -1,5 +1,5 @@
 from flask import Flask, redirect, render_template, request, session
-from funciones import graba_diccionario, lee_diccionario_csv, cambiar_clave, encriptar
+from funciones import graba_diccionario, lee_diccionario_csv, cambiar_clave
 from passlib.hash import sha256_crypt
 import os
 
@@ -51,9 +51,9 @@ def login():
             if usuario in diccionario_usuarios_a:
                 password_db = diccionario_usuarios_a[usuario]['password'] # password guardad
                 password_forma = request.form['password'] #password presentado
-                encriptar(password_db,archivo_usuarios_a)
+                password_db_crip = sha256_crypt.hash(password_db)
                 password_db = diccionario_usuarios_a[usuario]['password'] # password guardad
-                verificado = sha256_crypt.verify(password_forma,password_db)
+                verificado = sha256_crypt.verify(password_forma,password_db_crip)
                 #"""
                 if (verificado == True):
                     session['usuario'] = usuario

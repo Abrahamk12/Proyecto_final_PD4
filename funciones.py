@@ -1,6 +1,6 @@
 import csv
 from passlib.hash import sha256_crypt
-from Levenshtein import distance
+#from Levenshtein import distance
 import pandas as pd  
     
 #'''
@@ -61,9 +61,3 @@ def graba_diccionario(diccionario:dict,llave_dict:str,archivo:str):
 def cambiar_clave(diccionario:dict,llave_dict:str,archivo:str)->None:
     #Configuralo para modificar la contraseña
     print()
-
-def encriptar(llave_dict:str,archivo:str)->None:
-    dataframe = pd.read_csv(archivo)
-    dataframe.replace(to_replace ="llave_dict",  
-                 value = sha256_crypt.hash(llave_dict),  
-                  inplace = True) 
