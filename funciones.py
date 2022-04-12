@@ -59,26 +59,19 @@ def graba_diccionario(diccionario:dict,llave_dict:str,archivo:str):
 
 def cambiar_clave(usuario:str,llave_dict:str,archivo:str)->None:
     #Configuralo para modificar la contraseña
-    diccionario = {}
-    try:
-        with open(archivo,'r',encoding='utf-8') as fh:
-            csv_reader = csv.DictReader(fh)
-            for renglon in csv_reader:
-                llave = renglon['usuario']
-                diccionario[llave]=renglon
-    except IOError:
-        print(f"No se pudo leer el archivo {archivo}")
+    diccionario = lee_diccionario_csv(archivo)
 
     llave_dict_cryp = sha256_crypt.hash(llave_dict)
     diccionario.update({usuario: llave_dict_cryp})
-    lista_campos = obten_campos(diccionario, llave_dict)
-    
-    dw = csv.DictWriter(fh,lista_campos)
-    dw.writeheader()
-    renglones = []
-    for llave, valor_d in diccionario.items():
-        d = { 'usuario':llave}
-        for key, value  in valor_d.items():
-            d[key] = value
-        renglones.append(d)
-    dw.writerows(renglones)
+
+    with open(archivo,'w') as fh: #fh = file handle
+        lista_campos = obten_campos(diccionario, llave_dict)
+        dw = csv.DictWriter(fh,lista_campos)
+        dw.writeheader()
+        renglones = []
+        for llave, valor_d in diccionario.items():
+            d = { 'usuario':llave}
+            for key, value  in valor_d.items():
+                d[key] = value
+            renglones.append(d)
+        dw.writerows(renglones)
