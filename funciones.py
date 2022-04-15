@@ -1,6 +1,6 @@
 import csv
 from passlib.hash import sha256_crypt
-#from Levenshtein import distance
+import csv
     
 #'''
 class Usuarios():
@@ -57,13 +57,15 @@ def graba_diccionario(diccionario:dict,llave_dict:str,archivo:str):
         dw.writerows(renglones)
 #'''
 
-def cambiar_clave(usuario:str,llave_dict:str,archivo:str)->None:
+def cambiar_clave(usuario:str,password,archivo:str)->None:
     #Configuralo para modificar la contraseña
     diccionario = lee_diccionario_csv(archivo)
+    print(diccionario)
 
-    llave_dict_cryp = sha256_crypt.hash(llave_dict)
+    llave_dict_cryp = sha256_crypt.hash(password)
     diccionario.update({usuario: llave_dict_cryp})
-
+    print("\n",diccionario)
+    '''
     with open(archivo,'w') as fh: #fh = file handle
         lista_campos = obten_campos(diccionario, llave_dict)
         dw = csv.DictWriter(fh,lista_campos)
@@ -75,3 +77,10 @@ def cambiar_clave(usuario:str,llave_dict:str,archivo:str)->None:
                 d[key] = value
             renglones.append(d)
         dw.writerows(renglones)
+    '''
+    #https://code.tutsplus.com/es/tutorials/how-to-read-and-write-csv-files-in-python--cms-29907 enlace del ejemplo
+    with open(archivo, 'w') as csvfile:
+        fieldnames = ['usuario','password','n_competo','direccion','celular']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(diccionario)
