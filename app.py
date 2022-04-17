@@ -1,5 +1,5 @@
 from flask import Flask, redirect, render_template, request, session
-from funciones import graba_diccionario, lee_diccionario_csv, cambiar_clave
+from funciones import conectarse, save_user
 from passlib.hash import sha256_crypt
 import os
 
@@ -139,7 +139,7 @@ def restart_password():
             usuario = request.form['usuario']
             password = request.form['password']
             if usuario in diccionario_usuarios:
-                cambiar_clave(usuario,password,archivo_usuarios)
+                cambiar_clave(usuario,'usuario',password,archivo_usuarios)
         return redirect("/")
 
 @app.route('/a_opciones', methods=['GET','POST'])
