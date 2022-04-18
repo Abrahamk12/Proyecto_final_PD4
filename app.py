@@ -1,5 +1,5 @@
 from flask import Flask, redirect, render_template, request, session
-from funciones import save_user, save_t_user, get_usuario, get_t_usuario, get_password, get_t_password, get_roll, actualizar_password
+from funciones import *
 from passlib.hash import sha256_crypt
 import os
 
