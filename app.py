@@ -1,16 +1,10 @@
 from flask import Flask, redirect, render_template, request, session
-from funciones import conectarse, save_user
+from funciones import save_user
 from passlib.hash import sha256_crypt
 import os
 
 app = Flask(__name__)
 app.secret_key = "Moltr3s_3l_Gu4jolot3_M4cías"
-archivo_usuarios = 'usuarios.csv'
-archivo_usuarios_a = 'a_usuarios.csv'
-citas = 'citas.csv'
-d_citas = lee_diccionario_csv(citas)
-diccionario_usuarios = lee_diccionario_csv(archivo_usuarios)
-diccionario_usuarios_a = lee_diccionario_csv(archivo_usuarios_a)
 
 @app.context_processor
 def handle_context():
@@ -26,7 +20,7 @@ def login():
     if request.method == 'GET':
         msg = ''
         return render_template('login.html',mensaje=msg)
-    #"""
+    """
     else:
         if request.method == 'POST':
             usuario = request.form['usuario']
@@ -34,7 +28,6 @@ def login():
                 password_db = diccionario_usuarios[usuario]['password'] # password guardado
                 password_forma = request.form['password'] #password presentado
                 verificado = sha256_crypt.verify(password_forma,password_db)
-                #"""
                 if (verificado == True):
                     session['usuario'] = usuario
                     session['logged_in'] = True
@@ -47,14 +40,12 @@ def login():
                 else:
                     msg = f'El password de {usuario} no corresponde'
                     return render_template('login.html',mensaje=msg)
-                #"""
             if usuario in diccionario_usuarios_a:
                 password_db = diccionario_usuarios_a[usuario]['password'] # password guardad
                 password_forma = request.form['password'] #password presentado
                 password_db_crip = sha256_crypt.hash(password_db)
                 password_db = diccionario_usuarios_a[usuario]['password'] # password guardad
                 verificado = sha256_crypt.verify(password_forma,password_db_crip)
-                #"""
                 if (verificado == True):
                     session['usuario'] = usuario
                     session['logged_in'] = True
@@ -75,7 +66,7 @@ def login():
                 else:
                     msg = f'El password de {usuario} no corresponde'
                     return render_template('login.html',mensaje=msg)
-    #"""
+    """
 
 @app.route('/new_user', methods=['GET','POST'])
 @app.route('/new_user/', methods=['GET','POST'])
@@ -92,16 +83,9 @@ def new_user():
             celular = request.form['celular']
             password = request.form['password']
             password_cryp = sha256_crypt.hash(password)
-            if usuario not in diccionario_usuarios:
-                diccionario_usuarios[usuario] = {
-                    'password': password_cryp,
-                    'n_competo'  : n_competo,
-                    'direccion': direccion,
-                    'celular': celular
-                }
-            graba_diccionario(diccionario_usuarios,'usuario',archivo_usuarios)
+            save_user(n_competo, usuario, password_cryp, direccion, celular)
         return redirect('/')
-
+"""
 @app.route('/a_new_user', methods=['GET','POST'])
 @app.route('/a_new_user/', methods=['GET','POST'])
 def a_new_user():
@@ -126,7 +110,7 @@ def a_new_user():
                     'celular': celular
                 }
             graba_diccionario(diccionario_usuarios,'usuario',archivo_usuarios)
-
+"""
 @app.route('/restart_password', methods=['GET','POST'])
 @app.route('/restart_password/', methods=['GET','POST'])
 def restart_password():
@@ -138,8 +122,10 @@ def restart_password():
         if valor == 'Enviar':
             usuario = request.form['usuario']
             password = request.form['password']
+            """
             if usuario in diccionario_usuarios:
                 cambiar_clave(usuario,'usuario',password,archivo_usuarios)
+            """
         return redirect("/")
 
 @app.route('/a_opciones', methods=['GET','POST'])
