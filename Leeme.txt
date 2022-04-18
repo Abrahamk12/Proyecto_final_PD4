@@ -8,10 +8,15 @@ Cualquier idea ponerla en el drive, si se agrega algo, comentarlo en el codigo.
 Al hacer modificaciones, cargar el codigo modificado dentro de una ramificacion, 
 aparte agregar un pequeño comentario de que es lo que se hizo 
 
-Documentacion
+Documentacion de mysql workbench
 https://dev.mysql.com/doc/connector-python/en/connector-python-examples.html
 
 Base de datos
-PD4
-root - creo que la clave es la de tu pc
+-PD4
+-root - creo que la clave es la de tu pc
 para exportar e importar bd: https://www.youtube.com/watch?v=jTs1nSwAcRM&ab_channel=cristianballesteros
+ejemplos de consultas e ingresos de datos en mysql: https://parzibyte.me/blog/2021/03/29/flask-mysql-ejemplo-conexion-crud/
+
+librerias requeridas:
+    pymysql: https://anaconda.org/anaconda/pymysql
+    passlib: https://anaconda.org/anaconda/passlib
