@@ -1,4 +1,3 @@
-#from matplotlib.style import use
 from passlib.hash import sha256_crypt
 import pymysql
     
@@ -57,8 +56,7 @@ def get_usuario(user_name:str)->str:
         usuario = cursor.execute("SELECT user_name FROM usuarios WHERE user_name = " + '"' + user_name + '"')
         usuario = cursor.fetchone()
     conexion.close()
-    for i in range(len(usuario)):
-        us = usuario.__getitem__(i)
+    us = usuario.__getitem__(0)
     return us
 
 def get_t_usuario(user_name:str)->str:
@@ -94,3 +92,19 @@ def actualizar_t_password(user_name:str, password: str)->str:
         cursor = cursor.execute("UPDATE t_usuarios SET password =" + '"' + password_cryp + '"' + " WHERE user_name = " + '"' + user_name + '"')
     conexion.commit()
     conexion.close()
+
+def comprobar_usuario()->list:
+    c_us = []
+    conexion = conectarse()
+    with conexion.cursor() as cursor:
+        cursor.execute("SELECT user_name FROM usuarios")
+        c_usuario = cursor.fetchall()
+    conexion.close()
+    for i in range(len(c_usuario)):
+        us = c_usuario.__getitem__(i)
+        c_us.append(us.__getitem__(0))
+    return c_us
+'''
+a = comprobar_usuario()
+print(a)
+'''

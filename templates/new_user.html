@@ -15,27 +15,23 @@
             <form action="" method="POST">
                 <div>
                     <label for="n_competo">Nombre</label>
-                    <input type="text" id="n_competo" name="n_competo">
+                    <input type="text" id="n_competo" name="n_competo" required>
                 </div>
                 <div>
                     <label for="direccion">Direccion</label>
-                    <input type="text" id="direccion" name="direccion"> 
+                    <input type="text" id="direccion" name="direccion" required> 
                 </div>
                 <div>
                     <label for="celular">Celular</label>
-                    <input type="int" id="celular" name="celular">
+                    <input type="int" id="celular" name="celular" required maxlength="10">
                 </div>
                 <div>
                     <label for="usuario">Nombre de Usuario:</label>
-                    <input type="text" id="usuario" name="usuario" >
+                    <input type="text" id="usuario" name="usuario" required>
                 </div>
                 <div>
                     <label for="password">Contraseña:</label>
-                    <input type="password" id="password" name="password">
-                </div>
-                <div>
-                    <label for="c_password">Confirme contraseña:</label>
-                    <input type="password" id="c_password" name="c_password">
+                    <input type="password" id="password" name="password" required>
                 </div>
                 
                 <input type="submit" name="enviar" value="Enviar">

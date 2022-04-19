@@ -7,24 +7,20 @@
     <div>
         <form action="" method="POST">
             <div>
-                <label for="n_usuario">Nombre</label>
-                <input type="text" id="n_usuario" name="n_usuario">
+                <label for="n_completo">Nombre completo</label>
+                <input type="text" id="n_completo" name="n_completo" required>
             </div>
             <div>
                 <label for="usuario">Nombre de Usuario:</label>
-                <input type="text" id="usuario" name="usuario" >
+                <input type="text" id="usuario" name="usuario" required >
             </div>
             <div>
                 <label for="direccion">Roll</label>
-                <input type="text" id="roll" name="roll"> 
+                <input type="text" id="roll" name="roll" required> 
             </div>
             <div>
                 <label for="password">Contraseña:</label>
-                <input type="password" id="password" name="password">
-            </div>
-            <div>
-                <label for="c_password">Confirme contraseña:</label>
-                <input type="password" id="c_password" name="c_password">
+                <input type="password" id="password" name="password" required>
             </div>
             
             <input type="submit" name="enviar" value="Enviar">
