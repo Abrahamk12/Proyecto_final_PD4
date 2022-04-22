@@ -104,7 +104,38 @@ def comprobar_usuario()->list:
         us = c_usuario.__getitem__(i)
         c_us.append(us.__getitem__(0))
     return c_us
-'''
-a = comprobar_usuario()
-print(a)
-'''
+
+def comprobar_tusuario()->list:
+    c_us = []
+    conexion = conectarse()
+    with conexion.cursor() as cursor:
+        cursor.execute("SELECT user_name FROM usuarios")
+        c_usuario = cursor.fetchall()
+    conexion.close()
+    for i in range(len(c_usuario)):
+        us = c_usuario.__getitem__(i)
+        c_us.append(us.__getitem__(0))
+    return c_us
+
+def l_menu(usuario:str)->list:
+    #l = lista, m = menu, t = trabajador, a = admin, u = usuario
+    lma = ["Registrar trabajador", "Registrar usuario", 
+    "Cambiar contraseña usuario", "Cambiar contraseña trabajador","Ver Base de Datos",
+    "Perfil usuario"]
+    lmt = ["Agendar cita", "Cambiar cita", "Ver sig cita", "Pagos", "Perfil usuario",
+     "Cancelar cita"]
+    lmu = ["Agendar cita", "Cambiar cita", "Cancelar cita", "Ver citas", 
+    "Ver historial"]
+    lmd = ["Sig cita", "Perfil paciente"]
+    #roll = get_roll(usuario)
+    r#eturn lmu
+    '''
+    if roll == "trabajador":
+        return lmt
+    if roll == "administrador":
+        return lma
+    if roll == "doctor":
+        return lmd
+    else:
+        return lmu
+    '''
