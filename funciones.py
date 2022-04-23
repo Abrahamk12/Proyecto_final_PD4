@@ -121,14 +121,14 @@ def l_menu(usuario:str)->list:
     #l = lista, m = menu, t = trabajador, a = admin, u = usuario
     lma = ["Registrar trabajador", "Registrar usuario", 
     "Cambiar contraseña usuario", "Cambiar contraseña trabajador","Ver Base de Datos",
-    "Perfil usuario"]
+    "Perfil usuario", "Cambiar contraseña"]
     lmt = ["Agendar cita", "Cambiar cita", "Ver sig cita", "Pagos", "Perfil usuario",
-     "Cancelar cita"]
+     "Cancelar cita", "Cambiar contraseña"]
     lmu = ["Agendar cita", "Cambiar cita", "Cancelar cita", "Ver citas", 
-    "Ver historial"]
-    lmd = ["Sig cita", "Perfil paciente"]
+    "Ver historial", "Cambiar contraseña"]
+    lmd = ["Sig cita", "Cita actual", "Perfil paciente", "Cambiar contraseña"]
     #roll = get_roll(usuario)
-    r#eturn lmu
+    #return lmu
     '''
     if roll == "trabajador":
         return lmt
