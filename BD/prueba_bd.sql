@@ -167,7 +167,7 @@ CREATE TABLE `usuarios` (
   `celular` int NOT NULL,
   PRIMARY KEY (`idusuarios`),
   UNIQUE KEY `password_UNIQUE` (`password`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -176,6 +176,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
+INSERT INTO `usuarios` VALUES (1,'Patata','Pizza','$5$rounds=535000$NT9UJ03rNzzgP4ic$X6/O.0F7IBLeXI7BfJw81onJ8zQLeFmXLndkKZ5RLl/','potato\'s',39089),(2,'Potaos','Perro','$5$rounds=535000$M15XJAEHACXbBrJm$4tfVlVrix/RdSb6p5uGbeqciheIB2M5dSb3IL.j3IYB','potato\'s',39089);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -188,4 +189,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-17 13:17:36
+-- Dump completed on 2022-04-25 16:30:24
