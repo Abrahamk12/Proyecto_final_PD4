@@ -4,6 +4,39 @@
 {{super()}}
 {% endblock %}
 <body>
-    
+    <div name="menu">
+        <ul>
+            <li><p>Opcion del menu</p></li>
+        </ul>
+    </div>
+    <div>
+        <form id="a_cita" action="">
+            <div>
+                <label for="usuario">Usuario</label>
+                <input type="text" name="usuario" id="usuario">
+            </div>
+            <div>
+                <label for="fecha">Fecha</label>
+                <input type="date" name="fecha" id="fecha">
+                <label for="hora">Hora</label>
+                <input type="time" name="hora" id="hora">
+            </div>
+            <div>
+                <label for="">Motivo</label>
+                <input type="text" name="motivo" id="motivo">
+            </div>
+            <div>
+                <label for="">Cantidad de mascotas</label>
+                <input type="int" name="c_mascotas" id="c_mascotas">
+            </div>
+            <input type="submit" name="enviar" value="Enviar">
+        </form>
+    </div>
 </body>
 </html>
+
+<script>
+    function limpiarFormulario() {
+      document.getElementById("a_cita").reset();
+    }
+  </script>

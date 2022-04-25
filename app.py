@@ -158,7 +158,16 @@ def a_agendar_cita():
         menu = l_menu(user_in_sesion)
         return render_template('agendar_cita.html', menu = menu)
     if request.method == 'POST':
-        print()
+        valor = request.form['enviar']
+        if valor == 'Enviar':
+            usuario = request.form['usuario']
+            fecha = request.form['fecha']
+            hora = request.form['hora']
+            datatime = fecha + hora
+            print("\nViendo como esta el formato de la fecha y hora",datatime,"\n")
+            motivo = request.form['motivo']
+            c_mascotas = request.form['c_mascotas']
+            #agendar_cita(usuario, datatime, motivo, c_mascotas)
 
 @app.route('/a_opciones', methods=['GET','POST'])
 @app.route('/a_opciones/', methods=['GET','POST'])
@@ -202,15 +211,6 @@ def a_ver_historial():
 
 @app.route('/a_opciones', methods=['GET','POST'])
 @app.route('/a_opciones/', methods=['GET','POST'])
-def a_opciones():
-    if request.method == 'GET':
-        menu = l_menu(user_in_sesion)
-        return render_template('d_opciones.html', menu = menu)
-    if request.method == 'POST':
-        print()
-
-@app.route('/a_opciones', methods=['GET','POST'])
-@app.route('/a_opciones/', methods=['GET','POST'])
 @app.route('/a_opciones/sig_cita', methods=['GET','POST'])
 def a_sig_cita():
     if request.method == 'GET':
@@ -239,20 +239,10 @@ def a_perfil_paciente():
     if request.method == 'POST':
         print()
 
-@app.route('/d_opciones', methods=['GET','POST'])
-@app.route('/d_opciones/', methods=['GET','POST'])
-@app.route('/a_opciones/sig_cita', methods=['GET','POST'])
-def a_sig_cita():
-    if request.method == 'GET':
-        menu = l_menu(user_in_sesion)
-        return render_template('sig_cita.html', menu = menu)
-    if request.method == 'POST':
-        print()
-
 #Apartado trabajador
 @app.route('/t_opciones', methods=['GET','POST'])
 @app.route('/t_opciones/', methods=['GET','POST'])
-def a_opciones():
+def t_opciones():
     if request.method == 'GET':
         menu = l_menu(user_in_sesion)
         return render_template('a_opciones.html', menu = menu)
@@ -352,7 +342,7 @@ def perfil_paciente():
 @app.route('/d_opciones', methods=['GET','POST'])
 @app.route('/d_opciones/', methods=['GET','POST'])
 @app.route('/d_opciones/sig_cita', methods=['GET','POST'])
-def sig_cita():
+def d_sig_cita():
     if request.method == 'GET':
         menu = l_menu(user_in_sesion)
         return render_template('sig_cita.html', menu = menu)
@@ -377,7 +367,16 @@ def agendar_cita():
         menu = l_menu(user_in_sesion)
         return render_template('agendar_cita.html', menu = menu)
     if request.method == 'POST':
-        print()
+        valor = request.form['enviar']
+        if valor == 'Enviar':
+            usuario = request.form['usuario']
+            fecha = request.form['fecha']
+            hora = request.form['hora']
+            datatime = fecha + hora
+            print("\nViendo como esta el formato de la fecha y hora",datatime,"\n")
+            motivo = request.form['motivo']
+            c_mascotas = request.form['c_mascotas']
+            #agendar_cita(usuario, datatime, motivo, c_mascotas)
 
 @app.route('/u_opciones', methods=['GET','POST'])
 @app.route('/u_opciones/', methods=['GET','POST'])
