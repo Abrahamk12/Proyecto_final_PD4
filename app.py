@@ -14,10 +14,11 @@ def handle_context():
 @app.route("/")
 def index():
     if user_in_sesion != "invitado":
-        return render_template("index.html")
-    else:
         menu = l_menu(user_in_sesion)
-        return render_template("index.html", men = menu)
+        return render_template("index.html", menu = menu)
+    else:
+        menu = {}
+        return render_template("index.html", menu = menu)
     
 
 @app.route('/login', methods=['GET','POST'])
@@ -150,94 +151,6 @@ def a_opciones():
     if request.method == 'POST':
         print()
 
-@app.route('/a_opciones', methods=['GET','POST'])
-@app.route('/a_opciones/', methods=['GET','POST'])
-@app.route('/a_opciones/agendar_cita', methods=['GET','POST'])
-def a_agendar_cita():
-    if request.method == 'GET':
-        menu = l_menu(user_in_sesion)
-        return render_template('agendar_cita.html', menu = menu)
-    if request.method == 'POST':
-        valor = request.form['enviar']
-        if valor == 'Enviar':
-            usuario = request.form['usuario']
-            fecha = request.form['fecha']
-            hora = request.form['hora']
-            datatime = fecha + hora
-            print("\nViendo como esta el formato de la fecha y hora",datatime,"\n")
-            motivo = request.form['motivo']
-            c_mascotas = request.form['c_mascotas']
-            #agendar_cita(usuario, datatime, motivo, c_mascotas)
-
-@app.route('/a_opciones', methods=['GET','POST'])
-@app.route('/a_opciones/', methods=['GET','POST'])
-@app.route('/a_opciones/cambiar_cita', methods=['GET','POST'])
-def a_cambiar_cita():
-    if request.method == 'GET':
-        menu = l_menu(user_in_sesion)
-        return render_template('cambiar_cita.html', menu = menu)
-    if request.method == 'POST':
-        print()
-
-@app.route('/a_opciones', methods=['GET','POST'])
-@app.route('/a_opciones/', methods=['GET','POST'])
-@app.route('/a_opciones/cacelar_cita', methods=['GET','POST'])
-def a_cacelar_cita():
-    if request.method == 'GET':
-        menu = l_menu(user_in_sesion)
-        return render_template('cancelar_cita.html', menu = menu)
-    if request.method == 'POST':
-        print()
-
-@app.route('/a_opciones', methods=['GET','POST'])
-@app.route('/a_opciones/', methods=['GET','POST'])
-@app.route('/a_opciones/ver_citas', methods=['GET','POST'])
-def a_ver_citas():
-    if request.method == 'GET':
-        menu = l_menu(user_in_sesion)
-        return render_template('ver_citas.html', menu = menu)
-    if request.method == 'POST':
-        print()
-
-@app.route('/a_opciones', methods=['GET','POST'])
-@app.route('/a_opciones/', methods=['GET','POST'])
-@app.route('/a_opciones/ver_historial', methods=['GET','POST'])
-def a_ver_historial():
-    if request.method == 'GET':
-        menu = l_menu(user_in_sesion)
-        return render_template('ver_historial.html', menu = menu)
-    if request.method == 'POST':
-        print()
-
-@app.route('/a_opciones', methods=['GET','POST'])
-@app.route('/a_opciones/', methods=['GET','POST'])
-@app.route('/a_opciones/sig_cita', methods=['GET','POST'])
-def a_sig_cita():
-    if request.method == 'GET':
-        menu = l_menu(user_in_sesion)
-        return render_template('sig_cita.html', menu = menu)
-    if request.method == 'POST':
-        print()
-
-@app.route('/a_opciones', methods=['GET','POST'])
-@app.route('/a_opciones/', methods=['GET','POST'])
-@app.route('/a_opciones/cita_actual', methods=['GET','POST'])
-def a_cita_actual():
-    if request.method == 'GET':
-        menu = l_menu(user_in_sesion)
-        return render_template('cita_actual.html', menu = menu)
-    if request.method == 'POST':
-        print()
-
-@app.route('/a_opciones', methods=['GET','POST'])
-@app.route('/a_opciones/', methods=['GET','POST'])
-@app.route('/a_opciones/perfil_paciente', methods=['GET','POST'])
-def a_perfil_paciente():
-    if request.method == 'GET':
-        menu = l_menu(user_in_sesion)
-        return render_template('perfil_paciente.html', menu = menu)
-    if request.method == 'POST':
-        print()
 
 #Apartado trabajador
 @app.route('/t_opciones', methods=['GET','POST'])
@@ -246,56 +159,6 @@ def t_opciones():
     if request.method == 'GET':
         menu = l_menu(user_in_sesion)
         return render_template('a_opciones.html', menu = menu)
-    if request.method == 'POST':
-        print()
-
-@app.route('/t_opciones', methods=['GET','POST'])
-@app.route('/t_opciones/', methods=['GET','POST'])
-@app.route('/t_opciones/agendar_cita', methods=['GET','POST'])
-def t_agendar_cita():
-    if request.method == 'GET':
-        menu = l_menu(user_in_sesion)
-        return render_template('agendar_cita.html', menu = menu)
-    if request.method == 'POST':
-        print()
-
-@app.route('/t_opciones', methods=['GET','POST'])
-@app.route('/t_opciones/', methods=['GET','POST'])
-@app.route('/t_opciones/cambiar_cita', methods=['GET','POST'])
-def t_cambiar_cita():
-    if request.method == 'GET':
-        menu = l_menu(user_in_sesion)
-        return render_template('cambiar_cita.html', menu = menu)
-    if request.method == 'POST':
-        print()
-
-@app.route('/t_opciones', methods=['GET','POST'])
-@app.route('/t_opciones/', methods=['GET','POST'])
-@app.route('/t_opciones/cacelar_cita', methods=['GET','POST'])
-def t_cacelar_cita():
-    if request.method == 'GET':
-        menu = l_menu(user_in_sesion)
-        return render_template('cancelar_cita.html', menu = menu)
-    if request.method == 'POST':
-        print()
-
-@app.route('/t_opciones', methods=['GET','POST'])
-@app.route('/t_opciones/', methods=['GET','POST'])
-@app.route('/t_opciones/ver_citas', methods=['GET','POST'])
-def t_ver_citas():
-    if request.method == 'GET':
-        menu = l_menu(user_in_sesion)
-        return render_template('ver_citas.html', menu = menu)
-    if request.method == 'POST':
-        print()
-
-@app.route('/t_opciones', methods=['GET','POST'])
-@app.route('/t_opciones/', methods=['GET','POST'])
-@app.route('/t_opciones/ver_historial', methods=['GET','POST'])
-def t_ver_historial():
-    if request.method == 'GET':
-        menu = l_menu(user_in_sesion)
-        return render_template('ver_historial.html', menu = menu)
     if request.method == 'POST':
         print()
 
@@ -309,46 +172,6 @@ def d_opciones():
     if request.method == 'POST':
         print()
 
-@app.route('/d_opciones', methods=['GET','POST'])
-@app.route('/d_opciones/', methods=['GET','POST'])
-@app.route('/d_opciones/sig_cita', methods=['GET','POST'])
-def sig_cita():
-    if request.method == 'GET':
-        menu = l_menu(user_in_sesion)
-        return render_template('sig_cita.html', menu = menu)
-    if request.method == 'POST':
-        print()
-
-@app.route('/d_opciones', methods=['GET','POST'])
-@app.route('/d_opciones/', methods=['GET','POST'])
-@app.route('/d_opciones/cita_actual', methods=['GET','POST'])
-def cita_actual():
-    if request.method == 'GET':
-        menu = l_menu(user_in_sesion)
-        return render_template('cita_actual.html', menu = menu)
-    if request.method == 'POST':
-        print()
-
-@app.route('/d_opciones', methods=['GET','POST'])
-@app.route('/d_opciones/', methods=['GET','POST'])
-@app.route('/d_opciones/perfil_paciente', methods=['GET','POST'])
-def perfil_paciente():
-    if request.method == 'GET':
-        menu = l_menu(user_in_sesion)
-        return render_template('perfil_paciente.html', menu = menu)
-    if request.method == 'POST':
-        print()
-
-@app.route('/d_opciones', methods=['GET','POST'])
-@app.route('/d_opciones/', methods=['GET','POST'])
-@app.route('/d_opciones/sig_cita', methods=['GET','POST'])
-def d_sig_cita():
-    if request.method == 'GET':
-        menu = l_menu(user_in_sesion)
-        return render_template('sig_cita.html', menu = menu)
-    if request.method == 'POST':
-        print()
-
 #Apartado Usuario
 @app.route('/u_opciones', methods=['GET','POST'])
 @app.route('/u_opciones/', methods=['GET','POST'])
@@ -356,65 +179,6 @@ def u_opciones():
     if request.method == 'GET':
         menu = l_menu(user_in_sesion)
         return render_template('d_opciones.html', menu = menu)
-    if request.method == 'POST':
-        print()
-
-@app.route('/u_opciones', methods=['GET','POST'])
-@app.route('/u_opciones/', methods=['GET','POST'])
-@app.route('/u_opciones/agendar_cita', methods=['GET','POST'])
-def agendar_cita():
-    if request.method == 'GET':
-        menu = l_menu(user_in_sesion)
-        return render_template('agendar_cita.html', menu = menu)
-    if request.method == 'POST':
-        valor = request.form['enviar']
-        if valor == 'Enviar':
-            usuario = request.form['usuario']
-            fecha = request.form['fecha']
-            hora = request.form['hora']
-            datatime = fecha + hora
-            print("\nViendo como esta el formato de la fecha y hora",datatime,"\n")
-            motivo = request.form['motivo']
-            c_mascotas = request.form['c_mascotas']
-            #agendar_cita(usuario, datatime, motivo, c_mascotas)
-
-@app.route('/u_opciones', methods=['GET','POST'])
-@app.route('/u_opciones/', methods=['GET','POST'])
-@app.route('/u_opciones/cambiar_cita', methods=['GET','POST'])
-def cambiar_cita():
-    if request.method == 'GET':
-        menu = l_menu(user_in_sesion)
-        return render_template('cambiar_cita.html', menu = menu)
-    if request.method == 'POST':
-        print()
-
-@app.route('/u_opciones', methods=['GET','POST'])
-@app.route('/u_opciones/', methods=['GET','POST'])
-@app.route('/u_opciones/cacelar_cita', methods=['GET','POST'])
-def cacelar_cita():
-    if request.method == 'GET':
-        menu = l_menu(user_in_sesion)
-        return render_template('cancelar_cita.html', menu = menu)
-    if request.method == 'POST':
-        print()
-
-@app.route('/u_opciones', methods=['GET','POST'])
-@app.route('/u_opciones/', methods=['GET','POST'])
-@app.route('/u_opciones/ver_citas', methods=['GET','POST'])
-def ver_citas():
-    if request.method == 'GET':
-        menu = l_menu(user_in_sesion)
-        return render_template('ver_citas.html', menu = menu)
-    if request.method == 'POST':
-        print()
-
-@app.route('/u_opciones', methods=['GET','POST'])
-@app.route('/u_opciones/', methods=['GET','POST'])
-@app.route('/u_opciones/ver_historial', methods=['GET','POST'])
-def ver_historial():
-    if request.method == 'GET':
-        menu = l_menu(user_in_sesion)
-        return render_template('ver_historial.html', menu = menu)
     if request.method == 'POST':
         print()
 

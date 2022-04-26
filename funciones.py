@@ -73,8 +73,7 @@ def get_roll(user_name:str)->str:
     with conexion.cursor() as cursor:
         roll = cursor.execute("SELECT roll FROM t_usuarios WHERE user_name = " + '"' + user_name + '"')
     conexion.close()
-    for i in range(len(roll)):
-        rol = roll.__getitem__(i)
+    rol = roll.__getitem__(0)
     return rol
 
 def actualizar_password(user_name:str, password: str)->str:
@@ -122,22 +121,41 @@ def l_menu(usuario:str)->list:
     lma = ["Registrar trabajador", "Registrar usuario", 
     "Cambiar contraseña usuario", "Cambiar contraseña trabajador","Ver Base de Datos",
     "Perfil usuario", "Cambiar contraseña"]
-    lmt = ["Agendar cita", "Cambiar cita", "Ver sig cita", "Pagos", "Perfil usuario",
-     "Cancelar cita", "Cambiar contraseña"]
-    lmu = ["Agendar cita", "Cambiar cita", "Cancelar cita", "Ver citas", 
-    "Ver historial", "Cambiar contraseña"]
+    dma = {"Registrar trabajador":"/a_opciones/trabajador",
+    "Registrar usuario":"/a_opciones/usuario",
+    "Cambiar contraseña usuario":'/restart_password/', 
+    "Cambiar contraseña trabajador":"",
+    "Ver Base de Datos":"",
+    "Perfil usuario":"", 
+    "Cambiar contraseña":""}
+    
+    dmt = {"Agendar cita", 
+    "Cambiar cita", 
+    "Ver sig cita", 
+    "Pagos", 
+    "Perfil usuario",
+     "Cancelar cita", "Cambiar contraseña"}
+     
+    dmu = {"Agendar cita", 
+    "Cambiar cita", 
+    "Cancelar cita", 
+    "Ver citas", 
+    "Ver historial", 
+    "Cambiar contraseña"}
+
     lmd = ["Sig cita", "Cita actual", "Perfil paciente", "Cambiar contraseña"]
+
     #roll = get_roll(usuario)
-    #return lmu
+    return dmu
     '''
     if roll == "trabajador":
-        return lmt
+        return dmt
     if roll == "administrador":
-        return lma
+        return dma
     if roll == "doctor":
-        return lmd
+        return dmd
     else:
-        return lmu
+        return dmu
     '''
 def save_cita(user_name:str, fecha:str, motivo:str, c_mascotas:int)->None:
     conexion = conectarse()

@@ -35,6 +35,12 @@
         </div>
 
     </div>
+    <div>
+        <ul>{% for opcion,url in menu.items() %}
+            <li> <a href="{{url}}"> {{opcion}}</a> </li>
+            {% endfor %}
+        </ul>
+    </div>
 {% block body %}
 {% endblock %}
 </body>
