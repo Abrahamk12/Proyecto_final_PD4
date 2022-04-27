@@ -25,7 +25,7 @@ def save_user(nombre:str, user_name:str, password:str, direccion:str, celular:in
 def save_t_user(nombre:str, user_name:str, password:str, roll:str)->None:
     conexion = conectarse()
     with conexion.cursor() as cursor:
-        cursor.execute("INSERT INTO t_usuarios(nombre_completo, user_name, password, roll, celular) VALUES (%s, %s, %s, %s)",
+        cursor.execute("INSERT INTO t_usuarios(nombre_completo, user_name, password, roll) VALUES (%s, %s, %s, %s)",
                        (nombre, user_name, password, roll))
     conexion.commit()
     conexion.close()
@@ -116,38 +116,42 @@ def comprobar_tusuario()->list:
         c_us.append(us.__getitem__(0))
     return c_us
 
+def set_roll()->list:
+    lr = ["administrador","trabajador","doctor"]
+
 def l_menu(usuario:str)->list:
-    #l = lista, m = menu, t = trabajador, a = admin, u = usuario
-    lma = ["Registrar trabajador", "Registrar usuario", 
-    "Cambiar contraseña usuario", "Cambiar contraseña trabajador","Ver Base de Datos",
-    "Perfil usuario", "Cambiar contraseña"]
+    #d = diccionario, m = menu, t = trabajador, a = admin, u = usuario
     dma = {"Registrar trabajador":"/a_opciones/trabajador",
     "Registrar usuario":"/a_opciones/usuario",
     "Cambiar contraseña usuario":'/restart_password/', 
-    "Cambiar contraseña trabajador":"",
-    "Ver Base de Datos":"",
-    "Perfil usuario":"", 
-    "Cambiar contraseña":""}
+    "Cambiar contraseña trabajador":"/a_opciones/contraseña-trabajador",
+    "Ver Base de Datos":"/a_opciones/usuario/a_opciones/bd",
+    "Perfil usuario":"/a_opciones/perfil-usuario", 
+    "Cambiar contraseña":"/restart_password/"}
     
-    dmt = {"Agendar cita", 
-    "Cambiar cita", 
-    "Ver sig cita", 
-    "Pagos", 
-    "Perfil usuario",
-     "Cancelar cita", "Cambiar contraseña"}
+    dmt = {"Agendar cita":"", 
+    "Cambiar cita":"", 
+    "Ver sig cita":"", 
+    "Pagos":"", 
+    "Perfil usuario":"",
+    "Cancelar cita":"", 
+    "Cambiar contraseña":""}
      
-    dmu = {"Agendar cita", 
-    "Cambiar cita", 
-    "Cancelar cita", 
-    "Ver citas", 
-    "Ver historial", 
-    "Cambiar contraseña"}
+    dmu = {"Agendar cita":"", 
+    "Cambiar cita":"", 
+    "Cancelar cita":"", 
+    "Ver citas":"", 
+    "Ver historial":"", 
+    "Cambiar contraseña":""}
 
-    lmd = ["Sig cita", "Cita actual", "Perfil paciente", "Cambiar contraseña"]
+    dmd = {"Sig cita":"", 
+    "Cita actual":"",
+    "Perfil paciente":"",
+    "Cambiar contraseña":""}
 
-    #roll = get_roll(usuario)
-    return dmu
-    '''
+    roll = get_roll(usuario)
+    #return dmu
+    #'''
     if roll == "trabajador":
         return dmt
     if roll == "administrador":
@@ -156,7 +160,7 @@ def l_menu(usuario:str)->list:
         return dmd
     else:
         return dmu
-    '''
+    #'''
 def save_cita(user_name:str, fecha:str, motivo:str, c_mascotas:int)->None:
     conexion = conectarse()
     with conexion.cursor() as cursor:

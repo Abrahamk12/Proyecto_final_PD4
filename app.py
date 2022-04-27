@@ -123,6 +123,25 @@ def a_new_user():
                 save_t_user(n_completo,usuario,password_cryp,roll)
                 return render_template('/')
 
+@app.route('/add_new_user_t', methods=['GET','POST'])
+@app.route('/add_new_user_t/', methods=['GET','POST'])
+def add_new_user_t():
+    if request.method == 'GET':
+        msg = ''
+        return render_template('add_new_user_t.html',mensaje=msg)
+    if request.method == 'POST':
+        valor = request.form['enviar']
+        if valor == 'Enviar':
+            usuario = request.form['usuario']
+            n_completo  = request.form['n_completo']
+            roll  = request.form['roll']
+            password = request.form['password']
+            password_cryp = sha256_crypt.hash(password)
+            c_usuario = comprobar_usuario()
+            if usuario not in c_usuario:
+                save_t_user(n_completo,usuario,password_cryp,roll)
+                return render_template('/')
+
 @app.route('/restart_password', methods=['GET','POST'])
 @app.route('/restart_password/', methods=['GET','POST'])
 def restart_password():
@@ -135,12 +154,16 @@ def restart_password():
             usuario = request.form['usuario']
             password = request.form['password']
             c_us = comprobar_usuario()
+            c_tus = comprobar_tusuario()
             if usuario not in c_us:
                 return redirect("/new_user")
+            if usuario in c_tus:
+                password_cryp = sha256_crypt.hash(password)
+                actualizar_t_password(usuario, password_cryp)
             else:
                 actualizar_password(usuario, password)
                 return redirect("/")
-            
+          
 #Apartado Administrador
 @app.route('/a_opciones', methods=['GET','POST'])
 @app.route('/a_opciones/', methods=['GET','POST'])
@@ -150,7 +173,6 @@ def a_opciones():
         return render_template('a_opciones.html', menu = menu)
     if request.method == 'POST':
         print()
-
 
 #Apartado trabajador
 @app.route('/t_opciones', methods=['GET','POST'])
