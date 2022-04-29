@@ -119,24 +119,29 @@ def comprobar_tusuario()->list:
 def set_roll()->list:
     lr = ["administrador","trabajador","doctor"]
 
-def l_menu(usuario:str)->list:
+def l_menu(usuario:str, rol:str)->list:
     #d = diccionario, m = menu, t = trabajador, a = admin, u = usuario
-    dma = {"Registrar trabajador":"/a_opciones/trabajador",
+    dma = {"Registrar trabajador":"/a_opciones/add_new_user_t.html",
     "Registrar usuario":"/a_opciones/usuario",
     "Cambiar contraseña usuario":'/restart_password/', 
     "Cambiar contraseña trabajador":"/a_opciones/contraseña-trabajador",
     "Ver Base de Datos":"/a_opciones/usuario/a_opciones/bd",
-    "Perfil usuario":"/a_opciones/perfil-usuario", 
+    "Perfil usuario":"/a_opciones/perfil_usuario.html", 
     "Cambiar contraseña":"/restart_password/"}
     
-    dmt = {"Agendar cita":"", 
-    "Cambiar cita":"", 
-    "Ver sig cita":"", 
-    "Pagos":"", 
-    "Perfil usuario":"",
-    "Cancelar cita":"", 
-    "Cambiar contraseña":""}
+    dmt = {"Agendar cita":"/t_opciones/agendar_cita.html", 
+    "Cambiar cita":"/t_opciones/cambiar_cita.html", 
+    "Ver sig cita":"/t_opciones/", 
+    "Pagos":"/t_opciones/pago.html", 
+    "Perfil usuario":"/t_opciones/",
+    "Cancelar cita":"/t_opciones/", 
+    "Cambiar contraseña":"/t_opciones/"}
      
+    dmd = {"Sig cita":"", 
+        "Cita actual":"",
+        "Perfil paciente":"",
+        "Cambiar contraseña":""}
+
     dmu = {"Agendar cita":"", 
     "Cambiar cita":"", 
     "Cancelar cita":"", 
@@ -144,13 +149,11 @@ def l_menu(usuario:str)->list:
     "Ver historial":"", 
     "Cambiar contraseña":""}
 
-    dmd = {"Sig cita":"", 
-    "Cita actual":"",
-    "Perfil paciente":"",
-    "Cambiar contraseña":""}
-
-    roll = get_roll(usuario)
-    #return dmu
+    if rol == "usuario":
+        return dmu
+    else:
+        roll = get_roll(usuario)
+        
     #'''
     if roll == "trabajador":
         return dmt
@@ -161,6 +164,7 @@ def l_menu(usuario:str)->list:
     else:
         return dmu
     #'''
+
 def save_cita(user_name:str, fecha:str, motivo:str, c_mascotas:int)->None:
     conexion = conectarse()
     with conexion.cursor() as cursor:

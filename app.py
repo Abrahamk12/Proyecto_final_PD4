@@ -33,31 +33,38 @@ def login():
         if request.method == 'POST':
             usuario = request.form['usuario']
             user = get_usuario(usuario)
-            c_usuario = comprobar_usuario()
-            
-            if usuario not in c_usuario:
-                return redirect('/new_user')
-            else:
-                if usuario == user:
-                    password_db = get_password(usuario) # password guardado
-                    password_forma = request.form['password'] #password presentado
-                    verificado = sha256_crypt.verify(password_forma,password_db)
-                    user_in_sesion = user
-                    if (verificado == True):
-                        session['usuario'] = usuario
-                        session['logged_in'] = True
-                        incio(user_in_sesion)
-                        if 'ruta' in session:
-                            ruta = session['ruta']
-                            session['ruta'] = None
-                            return redirect(ruta)
-                        else:
-                            return redirect("/u_opciones")
+            if usuario == user:
+                password_db = get_password(usuario) # password guardado
+                password_forma = request.form['password'] #password presentado
+                verificado = sha256_crypt.verify(password_forma,password_db)
+                user_in_sesion = user
+                if (verificado == True):
+                    session['usuario'] = usuario
+                    session['logged_in'] = True
+                    incio(user_in_sesion)
+                    if 'ruta' in session:
+                        ruta = session['ruta']
+                        session['ruta'] = None
+                        return redirect(ruta)
                     else:
-                        msg = f'El password de {usuario} no corresponde'
-                        return render_template('login.html',mensaje=msg)
+                        return redirect("/u_opciones")
+                else:
+                    msg = f'El password de {usuario} no corresponde'
+                    return render_template('login.html',mensaje=msg)
+            
+#"""
+@app.route('/login_t', methods=['GET','POST'])
+@app.route('/login_t/', methods=['GET','POST'])
+def login():
+    if request.method == 'GET':
+        msg = ''
+        return render_template('login_t.html',mensaje=msg)
+
+    else:
+        if request.method == 'POST':
+            usuario = request.form['usuario']
             a_user = get_t_usuario(usuario)
-                
+        else:
             if usuario == a_user:
                 password_db = get_t_password(usuario) # password guardado
                 password_forma = request.form['password'] #password presentado
@@ -71,8 +78,6 @@ def login():
                         session['ruta'] = None
                         return redirect(ruta)
                     else:
-                        #El chiste es ver si es un admin o un trabajador, dependiendo de que lo mande a la pag
-                        #no se me ocurre como hacerlo :v
                         roll = get_roll(usuario)
                         if roll == "admin":
                             return redirect("/a_opciones")
@@ -82,7 +87,6 @@ def login():
                             return redirect("/d_opciones")
                         else:
                             return redirect("/u_opciones")
-#"""
 
 @app.route('/new_user', methods=['GET','POST'])
 @app.route('/new_user/', methods=['GET','POST'])
@@ -210,6 +214,7 @@ def u_opciones():
 def logout():
     if request.method == 'GET':
         session.clear()
+        user_in_sesion = "invitado"
         return redirect("/")
 
 if __name__ == '__main__':
