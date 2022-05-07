@@ -11,10 +11,11 @@ def save_user(nombre:str, user_name:str, password:str, direccion:str, celular:in
     conexion.close()
 
 def save_t_user(nombre:str, user_name:str, password:str, roll:str)->None:
+    password_cryp = sha256_crypt.hash(password)
     conexion = conectarse()
     with conexion.cursor() as cursor:
-        cursor.execute("INSERT INTO t_usuarios(nombre_completo, user_name, password, roll, celular) VALUES (%s, %s, %s, %s)",
-                       (nombre, user_name, password, roll))
+        cursor.execute("INSERT INTO t_usuarios(nombre_completo, user_name, password, roll) VALUES (%s, %s, %s, %s)",
+                       (nombre, user_name, password_cryp, roll))
     conexion.commit()
     conexion.close()
 
@@ -92,3 +93,4 @@ def comprobar_usuario()->list:
         us = c_usuario.__getitem__(i)
         c_us.append(us.__getitem__(0))
     return c_us
+

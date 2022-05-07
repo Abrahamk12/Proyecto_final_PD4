@@ -13,8 +13,8 @@ def handle_context():
 
 @app.route("/")
 def index():
+    menu = {}
     if user_in_sesion != "invitado":
-        menu = l_menu(user_in_sesion)
         return render_template("index.html", menu = menu)
     else:
         menu = {}
@@ -55,7 +55,7 @@ def login():
 #"""
 @app.route('/login_t', methods=['GET','POST'])
 @app.route('/login_t/', methods=['GET','POST'])
-def login():
+def login_t():
     if request.method == 'GET':
         msg = ''
         return render_template('login_t.html',mensaje=msg)
@@ -79,7 +79,7 @@ def login():
                         return redirect(ruta)
                     else:
                         roll = get_roll(usuario)
-                        if roll == "admin":
+                        if roll == "admininstrador":
                             return redirect("/a_opciones")
                         if roll == "trabajador":
                             return redirect("/t_opciones")
@@ -112,8 +112,8 @@ def new_user():
 @app.route('/a_new_user/', methods=['GET','POST'])
 def a_new_user():
     if request.method == 'GET':
-        msg = ''
-        return render_template('a_new_user.html',mensaje=msg)
+        menu = l_menu(user_in_sesion)
+        return render_template('a_new_user.html',menu = menu)
     if request.method == 'POST':
         valor = request.form['enviar']
         if valor == 'Enviar':
@@ -203,10 +203,94 @@ def d_opciones():
 @app.route('/u_opciones/', methods=['GET','POST'])
 def u_opciones():
     if request.method == 'GET':
-        menu = l_menu(user_in_sesion)
+        menu = {"Agendar cita":"/agendar_cita/", 
+                "Cambiar cita":"/cambiar_cita/", 
+                "Cancelar cita":"/cancelar_cita/", 
+                "Ver citas":"/ver_citas/", 
+                "Ver historial":"/u_vhistorial/", 
+                "Cambiar contraseña":"/u_restart_p/"}
         return render_template('d_opciones.html', menu = menu)
     if request.method == 'POST':
         print()
+
+@app.route('/u_restart_p', methods=['GET','POST'])
+@app.route('/u_restart_p/', methods=['GET','POST'])
+def u_restart_p():
+    if request.method == 'GET':
+        menu = {"Agendar cita":"/agendar_cita/", 
+                "Cambiar cita":"/cambiar_cita/", 
+                "Cancelar cita":"/cancelar_cita/", 
+                "Ver citas":"/ver_citas/", 
+                "Ver historial":"/u_vhistorial/", 
+                "Cambiar contraseña":"/u_restart_p/"}
+        return render_template('cambiar_p.html',menu = menu)
+    if request.method == 'POST':
+        valor = request.form['enviar']
+        if valor == 'Enviar':
+            usuario = request.form['usuario']
+            password = request.form['password']
+            actualizar_password(usuario, password)
+            return redirect("/u_opciones")
+
+@app.route('/ver_historial', methods=['GET','POST'])
+@app.route('/ver_historial/', methods=['GET','POST'])
+def ver_historial():
+    if request.method == 'GET':
+        menu = {"Agendar cita":"/agendar_cita/", 
+                "Cambiar cita":"/cambiar_cita/", 
+                "Cancelar cita":"/cancelar_cita/", 
+                "Ver citas":"/ver_citas/", 
+                "Ver historial":"/ver_historial/", 
+                "Cambiar contraseña":"/u_restart_p/"}
+        return render_template('ver_historial.html',menu = menu)
+
+@app.route('/ver_citas', methods=['GET','POST'])
+@app.route('/ver_citas/', methods=['GET','POST'])
+def ver_citas():
+    if request.method == 'GET':
+        menu = {"Agendar cita":"/agendar_cita/", 
+                "Cambiar cita":"/cambiar_cita/", 
+                "Cancelar cita":"/cancelar_cita/", 
+                "Ver citas":"/ver_citas/", 
+                "Ver historial":"/ver_historial/", 
+                "Cambiar contraseña":"/u_restart_p/"}
+        return render_template('ver_citas.html',menu = menu)
+
+@app.route('/cancelar_cita', methods=['GET','POST'])
+@app.route('/cancelar_cita/', methods=['GET','POST'])
+def cancelar_cita():
+    if request.method == 'GET':
+        menu = {"Agendar cita":"/agendar_cita/", 
+                "Cambiar cita":"/cambiar_cita/", 
+                "Cancelar cita":"/cancelar_cita/", 
+                "Ver citas":"/ver_citas/", 
+                "Ver historial":"/ver_historial/", 
+                "Cambiar contraseña":"/u_restart_p/"}
+        return render_template('cancelar_cita.html',menu = menu)
+
+@app.route('/cambiar_cita', methods=['GET','POST'])
+@app.route('/cambiar_cita/', methods=['GET','POST'])
+def cambiar_cita():
+    if request.method == 'GET':
+        menu = {"Agendar cita":"/agendar_cita/", 
+                "Cambiar cita":"/cambiar_cita/", 
+                "Cancelar cita":"/cancelar_cita/", 
+                "Ver citas":"/ver_citas/", 
+                "Ver historial":"/ver_historial/", 
+                "Cambiar contraseña":"/u_restart_p/"}
+        return render_template('cambiar_cita.html',menu = menu)
+
+@app.route('/agendar_cita', methods=['GET','POST'])
+@app.route('/agendar_cita/', methods=['GET','POST'])
+def agendar_cita():
+    if request.method == 'GET':
+        menu = {"Agendar cita":"/agendar_cita/", 
+                "Cambiar cita":"/cambiar_cita/", 
+                "Cancelar cita":"/cancelar_cita/", 
+                "Ver citas":"/ver_citas/", 
+                "Ver historial":"/ver_historial/", 
+                "Cambiar contraseña":"/u_restart_p/"}
+        return render_template('agendar_cita.html',menu = menu)
 
 #Cerrar sesion
 @app.route('/logout', methods=['GET'])
@@ -219,3 +303,4 @@ def logout():
 
 if __name__ == '__main__':
     app.run(debug=True)
+    #app.run()

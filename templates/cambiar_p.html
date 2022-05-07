@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Proyecto final{% endblock %}
+{% block head %}
+{{super()}}
+{% endblock %}
+<body>
+    <div>
+        <form action="" method="POST">
+            <div>
+                <a for="regresar" href="/u_opciones"> <img src="/static/Regresar.png" alt="" width="2.5%" height="2.5%"> </a>
+            </div>
+            <div>
+                <label for="usuario">Nombre de usuario</label>
+                <input type="text" id="usuario" name="usuario" required>
+            </div>
+            <div>
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            
+            <input type="submit" name="enviar" value="Enviar">
+        </form>
+
+    </div>
+</body>
+</html>

@@ -129,8 +129,8 @@ def l_menu(usuario:str, rol:str)->list:
     "Perfil usuario":"/a_opciones/perfil_usuario.html", 
     "Cambiar contraseña":"/restart_password/"}
     
-    dmt = {"Agendar cita":"/t_opciones/agendar_cita.html", 
-    "Cambiar cita":"/t_opciones/cambiar_cita.html", 
+    dmt = {"Agendar cita":"/agendar_cita.", 
+    "Cambiar cita":"/cambiar_cita", 
     "Ver sig cita":"/t_opciones/", 
     "Pagos":"/t_opciones/pago.html", 
     "Perfil usuario":"/t_opciones/",
@@ -142,17 +142,7 @@ def l_menu(usuario:str, rol:str)->list:
         "Perfil paciente":"",
         "Cambiar contraseña":""}
 
-    dmu = {"Agendar cita":"", 
-    "Cambiar cita":"", 
-    "Cancelar cita":"", 
-    "Ver citas":"", 
-    "Ver historial":"", 
-    "Cambiar contraseña":""}
-
-    if rol == "usuario":
-        return dmu
-    else:
-        roll = get_roll(usuario)
+    roll = get_roll(usuario)
         
     #'''
     if roll == "trabajador":
@@ -161,8 +151,6 @@ def l_menu(usuario:str, rol:str)->list:
         return dma
     if roll == "doctor":
         return dmd
-    else:
-        return dmu
     #'''
 
 def save_cita(user_name:str, fecha:str, motivo:str, c_mascotas:int)->None:
