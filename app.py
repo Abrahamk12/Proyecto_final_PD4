@@ -103,8 +103,10 @@ def new_user():
             celular = request.form['celular']
             password = request.form['password']
             password_cryp = sha256_crypt.hash(password)
-            c_usuario = comprobar_usuario()
-            if usuario not in c_usuario:
+            #c_usuario = comprobar_usuario(usuario)
+            save_user(n_competo, usuario, password_cryp, direccion, celular)
+            return redirect('/login')
+            if usuario != c_usuario:
                 save_user(n_competo, usuario, password_cryp, direccion, celular)
                 return redirect('/login')
 
@@ -208,7 +210,7 @@ def t_opciones():
 
 @app.route('/pago', methods=['GET','POST'])
 @app.route('/pago/', methods=['GET','POST'])
-def sig_cita():
+def pago():
     if request.method == 'GET':
         menu = l_menu(user_in_sesion)
         return render_template('pago.html', menu = menu)

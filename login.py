@@ -1,14 +1,15 @@
-import pymysql
 from datetime import datetime
+import pyodbc
 import os
 
 registro = {}
 
-def conectarse()->None:
-    return pymysql.connect(host='127.0.0.1',
-                                user='root',
-                                password='2117',
-                                db='prueba_bd')
+def conectarse():
+    con_string = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};' \
+                 r'DBQ=C:\Users\josel\Desktop\Database2.accdb;'
+    conn = pyodbc.connect(con_string)
+    cursor = conn.cursor()
+    return cursor
 
 def incio(usuario:str)->None:
     now = datetime.now()
