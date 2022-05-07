@@ -178,6 +178,24 @@ def a_opciones():
     if request.method == 'POST':
         print()
 
+@app.route('/bd', methods=['GET','POST'])
+@app.route('/bd/', methods=['GET','POST'])
+def bd():
+    if request.method == 'GET':
+        menu = l_menu(user_in_sesion)
+        return render_template('bd.html', menu = menu)
+    if request.method == 'POST':
+        print()
+
+@app.route('/perfil_usuario', methods=['GET','POST'])
+@app.route('/perfil_usuario/', methods=['GET','POST'])
+def perfil_usuario():
+    if request.method == 'GET':
+        menu = l_menu(user_in_sesion)
+        return render_template('perfil_usuario.html', menu = menu)
+    if request.method == 'POST':
+        print()
+
 #Apartado trabajador
 @app.route('/t_opciones', methods=['GET','POST'])
 @app.route('/t_opciones/', methods=['GET','POST'])
@@ -188,6 +206,24 @@ def t_opciones():
     if request.method == 'POST':
         print()
 
+@app.route('/pago', methods=['GET','POST'])
+@app.route('/pago/', methods=['GET','POST'])
+def sig_cita():
+    if request.method == 'GET':
+        menu = l_menu(user_in_sesion)
+        return render_template('pago.html', menu = menu)
+    if request.method == 'POST':
+        print()
+
+@app.route('/contraseña_trabajador', methods=['GET','POST'])
+@app.route('/contraseña_trabajador/', methods=['GET','POST'])
+def contraseña_trabajador():
+    if request.method == 'GET':
+        menu = l_menu(user_in_sesion)
+        return render_template('contraseña_trabajador.html', menu = menu)
+    if request.method == 'POST':
+        print()
+
 #Apartado Doctor
 @app.route('/d_opciones', methods=['GET','POST'])
 @app.route('/d_opciones/', methods=['GET','POST'])
@@ -195,6 +231,33 @@ def d_opciones():
     if request.method == 'GET':
         menu = l_menu(user_in_sesion)
         return render_template('d_opciones.html', menu = menu)
+    if request.method == 'POST':
+        print()
+
+@app.route('/cita_actual', methods=['GET','POST'])
+@app.route('/cita_actual/', methods=['GET','POST'])
+def sigcita_actual_cita():
+    if request.method == 'GET':
+        menu = l_menu(user_in_sesion)
+        return render_template('cita_actual.html', menu = menu)
+    if request.method == 'POST':
+        print()
+
+@app.route('/sig_cita', methods=['GET','POST'])
+@app.route('/sig_cita/', methods=['GET','POST'])
+def sig_cita():
+    if request.method == 'GET':
+        menu = l_menu(user_in_sesion)
+        return render_template('sig_cita.html', menu = menu)
+    if request.method == 'POST':
+        print()
+
+@app.route('/perfil_paciente', methods=['GET','POST'])
+@app.route('/perfil_paciente/', methods=['GET','POST'])
+def perfil_paciente():
+    if request.method == 'GET':
+        menu = l_menu(user_in_sesion)
+        return render_template('perfil_paciente.html', menu = menu)
     if request.method == 'POST':
         print()
 

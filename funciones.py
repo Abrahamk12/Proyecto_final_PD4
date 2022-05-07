@@ -121,26 +121,26 @@ def set_roll()->list:
 
 def l_menu(usuario:str, rol:str)->list:
     #d = diccionario, m = menu, t = trabajador, a = admin, u = usuario
-    dma = {"Registrar trabajador":"/a_opciones/add_new_user_t.html",
-    "Registrar usuario":"/a_opciones/usuario",
+    dma = {"Registrar trabajador":"/a_opciones/add_new_user_t/",
+    "Registrar usuario":"/a_opciones/new_user",
     "Cambiar contraseña usuario":'/restart_password/', 
-    "Cambiar contraseña trabajador":"/a_opciones/contraseña-trabajador",
-    "Ver Base de Datos":"/a_opciones/usuario/a_opciones/bd",
-    "Perfil usuario":"/a_opciones/perfil_usuario.html", 
+    "Cambiar contraseña trabajador":"/a_opciones/contraseña_trabajador",
+    "Ver Base de Datos":"/a_opciones/bd/",
+    "Perfil usuario":"/a_opciones/perfil_usuario/", 
     "Cambiar contraseña":"/restart_password/"}
     
-    dmt = {"Agendar cita":"/agendar_cita.", 
-    "Cambiar cita":"/cambiar_cita", 
-    "Ver sig cita":"/t_opciones/", 
-    "Pagos":"/t_opciones/pago.html", 
+    dmt = {"Agendar cita":"/agendar_cita/", 
+    "Cambiar cita":"/cambiar_cita/", 
+    "Ver sig cita":"/sig_cita/", 
+    "Pagos":"/t_opciones/pago/", 
     "Perfil usuario":"/t_opciones/",
     "Cancelar cita":"/t_opciones/", 
     "Cambiar contraseña":"/t_opciones/"}
      
-    dmd = {"Sig cita":"", 
-        "Cita actual":"",
-        "Perfil paciente":"",
-        "Cambiar contraseña":""}
+    dmd = {"Sig cita":"/sig_cita/", 
+        "Cita actual":"/cita_actual/",
+        "Perfil paciente":"/perfil_paciente/",
+        "Cambiar contraseña":"contraseña_trabajador"}
 
     roll = get_roll(usuario)
         
