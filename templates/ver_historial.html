@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Proyecto final{% endblock %}
+{% block head %}
+{{super()}}
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $.ajax({
+            type: "GET",
+            url: '/tabla_peliculas',
+            dataType: 'json',
+            success: function(data) {
+                $('#tabla_peli').bootstrapTable({
+                    data: data
+                });
+            },
+            error: function(e) {
+                console.log(e.responseText);
+            }
+        });
+    });
+</script>
+{% endblock %}
+{% block body %}
+<table class="table" id="tabla_peli" data-search="true">
+    <thead>
+      <tr>
+        <th data-field="user_name" data-sortable="true">Usuario</th>
+        <th data-field="doctor" data-sortable="true">Doctor</th>
+        <th data-field="diagnostico" data-sortable="true">Diagnostico</th>
+        <th data-field="receta" data-sortable="true">Receta</th>
+        <th data-field="fecha" data-sortable="true">Fercha</th>
+      </tr>
+    </thead>
+
+</table>
+{% endblock %}
+</html>

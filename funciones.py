@@ -1,210 +1,180 @@
-import csv
 from passlib.hash import sha256_crypt
-from Levenshtein import distance
+import pyodbc
+import os
 
-class Pelicula():
-    def __init__(self,id,titulo,link_foto,fecha_estreno,descripcion):
+#'''
+class Usuarios():
+    def __init__(self,id,user,pasword):
         self.id = id
-        self.titulo = titulo
-        self.link_foto = link_foto
-        self.fecha_estreno = fecha_estreno
-        self.descripcion   = descripcion
-    def __str__(self):
-        return f'{self.titulo} - {self.fecha_estreno}'
+        self.user = user
+        self.pasword = pasword
 
-def lee_archivo_csv(archivo:str)->list:
-    '''Lee un archivo CSV y regresa una lista de registros
-    '''
-    lista = []
-    try:
-        with open(archivo,'r',encoding='utf-8') as fh:
-            csv_reader = csv.reader(fh)
-            for renglon in csv_reader:
-                lista.append(renglon)
-    except IOError:
-        print(f"No se pudo leer el archivo {archivo}")
-    return lista
+def conectarse():
+    DRIVER_NAME = "Microsoft Access Driver (*.mdb, *.accdb)"
+    DB_PATH  = os.getcwd() + "/PFDBD/D.accdb"
+    conn = pyodbc.connect("Driver={%s};DBQ=%s;" % (DRIVER_NAME, DB_PATH))
+    cursor = conn.cursor()
+    return cursor
 
-def lee_diccionario_csv(archivo:str)->list:
-    '''Lee un archivo CSV y regresa un diccionario de diccionarios
-    '''
-    diccionario = {}
-    try:
-        with open(archivo,'r',encoding='utf-8') as fh:
-            csv_reader = csv.DictReader(fh)
-            for renglon in csv_reader:
-                llave = renglon['usuario']
-                diccionario[llave]=renglon
-    except IOError:
-        print(f"No se pudo leer el archivo {archivo}")
-    return diccionario
+def save_user(nombre:str, user_name:str, password:str, direccion:str, celular:str)->None:
+    conexion = conectarse()
+    escogertabla = "usuario"
+    #'''
+    myuser =( (nombre, user_name, password, direccion, celular), )
+    conexion.executemany('INSERT INTO {} VALUES (?,?,?,?,?)'.format(escogertabla), myuser)
+    #'''
+    conexion.commit()
 
-def crea_diccionario_peliculas(lista:list) -> dict:
-    ''' Cicla la lista de peliculas para crear objetos Pelicula y agregarlos
-        al diccionario de peliculas. Regresa un diccionario de películas
-    '''
-    diccionario_peliculas = {}
-    for pelicula in lista:
-        id = pelicula[0]
-        titulo = pelicula[1]
-        link = pelicula[2]
-        fecha = pelicula[3]
-        trama = pelicula[4]
-        movie = Pelicula(id,titulo,link,fecha,trama)
-        if id not in diccionario_peliculas:
-            diccionario_peliculas[id] = movie
-    return diccionario_peliculas
+def save_t_user(nombre:str, user_name:str, password:str, roll:str)->None:
+    conexion = conectarse()
+    escogertabla = "t_usuarios"
+    myuser =( (nombre, user_name, password, roll,), )
+    conexion.executemany('INSERT INTO {} VALUES (?,?,?,?)'.format(escogertabla), myuser)
+    conexion.commit()
 
-def lee_diccionario_peliculas(archivo_csv:str)->dict:
-    ''' Lee un archivo CSV y regresa un diccionario de peliculas
-    '''
-    diccionario = {}
-    try:
-        with open(archivo_csv,"r",encoding="utf-8") as fh:
-            csvreader = csv.DictReader(fh)
-            for renglon in csvreader:
-                llave = renglon['id']
-                diccionario[llave] = renglon
-    except IOError:
-        print("Error al leer archivo")
-        print(IOError.filename)
-    return diccionario
+#Referencia de los get: https://parzibyte.me/blog/2021/03/29/flask-mysql-ejemplo-conexion-crud/
+def get_password(user_name:str)->str:
+    conexion = conectarse()
+    conexion.execute('SELECT password FROM usuario WHERE user_name = ' + "'" + user_name + "';")
+    for row in conexion.fetchone():
+        password = row
+    return password
 
-def crea_diccionario_generos(diccionario_peliculas:dict)->dict:
-    diccionario_genero = {}
-    for id,pelicula in diccionario_peliculas.items():
-        genero = pelicula['genero']
-        if genero not in diccionario_genero:
-            diccionario_genero[genero] = [pelicula]
-        else:
-            diccionario_genero[genero].append(pelicula)
-    return diccionario_genero
+def get_t_password(user_name:str)->str:
+    conexion = conectarse()
+    conexion.execute('SELECT password FROM usuarios WHERE user_name = ' + "'" + user_name + "';")
+    for row in conexion.fetchone():
+        password = row
+    return password
 
-def crea_diccionario_usuarios(diccionario_peliculas:dict)->dict:
-    diccionario_usuario = {}
-    for id,pelicula in diccionario_peliculas.items():
-        usuario = pelicula['usuario']
-        if genero not in diccionario_usuario:
-            diccionario_usuario[usuario] = [pelicula]
-        else:
-            diccionario_usuario[usuario].append(pelicula)
-    return diccionario_usuario
+def get_usuario(user_name:str)->str:
+    conexion = conectarse()
+    conexion.execute('SELECT user_name FROM usuario WHERE user_name = ' + "'" + user_name + "';")
+    for row in conexion.fetchone():
+        usuario = row
+    return usuario
 
-def crea_diccionario(diccionario_peliculas:dict,llave_ext:str)->dict:
-    diccionario = {}
-    for id,pelicula in diccionario_peliculas.items():
-        llave = pelicula[llave_ext]
-        if llave not in diccionario:
-            diccionario[llave] = [pelicula]
-        else:
-            diccionario[llave].append(pelicula)
-    return diccionario
+def get_t_usuario(user_name:str)->str:
+    conexion = conectarse()
+    conexion.execute('SELECT user_name FROM t_usuarios WHERE user_name = ' + "'" + user_name + "';")
+    for row in conexion.fetchone():
+        usuario = row
+    return usuario
 
+def get_roll(user_name:str)->str:
+    conexion = conectarse()
+    conexion.execute('SELECT roll FROM t_usuarios WHERE user_name = ' + "'" + user_name + "';")
+    for row in conexion.fetchone():
+        roll = row
+    return roll
 
-def crea_diccionario_x_anio(diccionario_peliculas:dict)->dict:
-    diccionario_anio = {}
-    for id, pelicula in diccionario_peliculas.items():
-        fecha = pelicula['fecha_estreno'].split("/") # 5/5/2022 -> 0/1/2
-        anio  = fecha[2]
-        if anio not in diccionario_anio:
-            diccionario_anio[anio] = [pelicula]
-        else:
-            diccionario_anio[anio].append(pelicula)
-    return diccionario_anio
+def get_historial(user_name)->dict:
+    li = []
+    l = []
+    lis = {"user_name","doctor","diagnostico","receta","fecha"}
+    i = 0
+    conexion = conectarse()
+    conexion.execute('SELECT * FROM citas_atendidas WHERE user_name = ' + "'" + user_name + "';")
+    for row in conexion.fetchall():
+        print(row)
+        li.append(row)
+        print("\Coño ",li.__getitem__(i))
+        l = li.__getitem__(i)
+        li = {"user_name":l.__getitem__(0),"doctor":l.__getitem__(1),"diagnostico":l.__getitem__(2),
+        "receta":l.__getitem__(3),"fecha":l.__getitem__(4)}
+        i += 1
+    print(lis)
+    return lis
 
-def graba_diccionario(diccionario:dict,llave_dict:str,archivo:str):
-    with open(archivo,'w') as fh: #fh = file handle
-        lista_campos = obten_campos(diccionario, llave_dict)
-        dw = csv.DictWriter(fh,lista_campos)
-        dw.writeheader()
-        renglones = []
-        for llave, valor_d in diccionario.items():
-            d = { 'usuario':llave}
-            for key, value  in valor_d.items():
-                d[key] = value
-            renglones.append(d)
-        dw.writerows(renglones)
+def actualizar_password(user_name:str, password: str)->str:
+    password_cryp = sha256_crypt.hash(password)
+    conexion = conectarse()
+    conexion = conexion.execute('UPDATE usuarios SET password =' + "'" + password_cryp + "'" + ' WHERE user_name = ' + "'" + user_name + "';")
 
-def obten_campos(diccionario:dict,llave_d:str)->list:
-    lista = [llave_d]
-    llaves = list(diccionario.keys())
-    k = llaves[0]
-    nuevo_diccionario = diccionario[k]
-    lista_campos = list(nuevo_diccionario.keys())
-    lista.extend(lista_campos)
-    return lista
+def actualizar_t_password(user_name:str, password: str)->str:
+    password_cryp = sha256_crypt.hash(password)
+    conexion = conectarse()
+    conexion.execute('UPDATE t_usuarios SET password =' + "'" + password_cryp + "'" + 'WHERE user_name = ' + "'" + user_name + "';")
 
-def limpia_texto(texto:str)->str:
-    lista_simbolos = [',',';','.','-','_',':','¿','?','¡','!']
-    for simbolo in lista_simbolos:
-        texto = texto.replace(simbolo,'')
-    return texto
-        
-def agrega_palabras(diccionario:dict, cadena:str, diccionario_pelicula):
-    minusculas = cadena.lower()
-    cadena_limpia = limpia_texto(minusculas)
-    palabras = cadena_limpia.split(" ")
-    for palabra in palabras:
-        if palabra not in diccionario:
-            diccionario[palabra] = [ diccionario_pelicula ]
-        else:
-            diccionario[palabra].append(diccionario_pelicula)
+def comprobar_usuario(usuario:str)->str:
+    conexion = conectarse()
+    conexion.execute('SELECT user_name FROM usuario WHERE user_name = ' + "'" + usuario + "';")
+    for row in conexion.fetchone():
+        u = row
+    return u
 
+def comprobar_tusuario(usuario:str)->list:
+    conexion = conectarse()
+    conexion.execute('SELECT user_name FROM t_usuarios WHERE user_name = ' + "'" + usuario + "';")
+    for row in conexion.fetchone():
+        u = row
+    return u
 
-def crea_superdiccionario(diccionario_peliculas:dict)->dict:
-    diccionario_palabras = {}
-    for id,pelicula in diccionario_peliculas.items():
-        titulo = pelicula['titulo']
-        sinopsis=pelicula['sinopsis']
-        agrega_palabras(diccionario_palabras,titulo,pelicula)
-        agrega_palabras(diccionario_palabras,sinopsis,pelicula)
-    return diccionario_palabras
+def set_roll()->list:
+    lr = ["administrador","trabajador","doctor"]
 
-def compara_distancia(diccionario:dict,frase:str)->dict:
-    diccionario_resultados = {}
-    lista_tuplas = []
-    for llave, lista in diccionario.items():
-        L = distance(frase, llave) 
-        tupla = (llave, L)
-        lista_tuplas.append(tupla)
-    #ordenar lista
-    sorted_t = sorted(lista_tuplas, key=lambda tup:tup[1])
-    # [ ("memory",15),("memory",2),("memory",3)]
-    for t in sorted_t[0:6]:
-        llave = t[0]
-        distancia = t[1]
-        peliculas = diccionario[llave] #lista peliculas asociadas con la llave
-        for pelicula in peliculas: #extraemos peliculas de la lista
-            id = pelicula['id']
-            pelicula['distancia'] = distancia #agregamos distancia de la frase original
-            pelicula['frase'] = llave #agregamos la frase con la que la encontramos
-            diccionario_resultados[id] = pelicula
-    return diccionario_resultados
-
-
-if __name__ == "__main__":
-    #listado = lee_archivo_csv("lista_estrenos.csv")
-    #for pelicula in listado:
-    #    print(pelicula[1])
-    #diccionario = crea_diccionario_peliculas(listado)
-    diccionario = lee_diccionario_peliculas("cartelera_estrenos.csv")
-    generos = crea_diccionario_generos(diccionario)
-    diccionario_anio = crea_diccionario_x_anio(diccionario)
-    for genero,pelis in generos.items():
-        print(genero)
-
-    #print(diccionario['Taken']['sinopsis'])
-
-    #print(diccionario_anio['2001'])
-    #diccionario_usuarios = {'bob': { 'nombre':'Bob Esponja',
-    #                             'edad'  : '20',
-    #                             'genero': 'Comedia'
-    #                            }
-    #                    }
-    #lista = obten_campos(diccionario_usuarios,'usuario')
-    #print(lista)
-    #graba_diccionario(diccionario_usuarios,'usuario','usuarios.csv')
-    texto_plano= 'Batman'
-    texto_cript= sha256_crypt.hash(texto_plano)
-    print(f'{texto_plano} es {texto_cript}')
+def l_menu(usuario:str, rol:str)->list:
+    #d = diccionario, m = menu, t = trabajador, a = admin, u = usuario
+    dma = {"Registrar trabajador":"/a_opciones/add_new_user_t/",
+    "Registrar usuario":"/a_opciones/new_user",
+    "Cambiar contraseña usuario":'/restart_password/', 
+    "Cambiar contraseña trabajador":"/a_opciones/contraseña_trabajador",
+    "Ver Base de Datos":"/a_opciones/bd/",
+    "Perfil usuario":"/a_opciones/perfil_usuario/", 
+    "Cambiar contraseña":"/restart_password/"}
     
+    dmt = {"Agendar cita":"/agendar_cita/", 
+    "Cambiar cita":"/cambiar_cita/", 
+    "Ver sig cita":"/sig_cita/", 
+    "Pagos":"/t_opciones/pago/", 
+    "Perfil usuario":"/t_opciones/",
+    "Cancelar cita":"/t_opciones/", 
+    "Cambiar contraseña":"/t_opciones/"}
+     
+    dmd = {"Sig cita":"/sig_cita/", 
+        "Cita actual":"/cita_actual/",
+        "Perfil paciente":"/perfil_paciente/",
+        "Cambiar contraseña":"contraseña_trabajador"}
+
+    roll = get_roll(usuario)
+        
+    #'''
+    if roll == "trabajador":
+        return dmt
+    if roll == "administrador":
+        return dma
+    if roll == "doctor":
+        return dmd
+    #'''
+
+def save_cita(user_name:str, fecha:str, hora:str, motivo:str, c_mascotas:str)->None:
+    conexion = conectarse()
+    escogertabla = "citas"
+    myuser =( (user_name, fecha, hora, motivo, c_mascotas), )
+    conexion.executemany('INSERT INTO {} VALUES (?,?,?,?,?)'.format(escogertabla), myuser)
+    conexion.commit()
+
+def cambiar_cita(user_name, fecha:str, hora:str)->None:
+    conexion = conectarse()
+    conexion.execut('UPDATE citas SET fecha = {%s}, hora = {%s} WHERE user_name = {%s};'%(fecha, hora, user_name))
+    conexion.commit()
+
+def cancelar_cita(user_name:str, fecha:str, hora:str)->None:
+    c = []
+    ci = []
+    conexion = conectarse()
+    conexion.execute('SELECT * FROM citasWHERE user_name = {%s}, fecha = {%s}, hora = {%s};'%(user_name, fecha, hora))
+    for row in conexion.fetchone():
+        c.append(row)
+        ci = c.__getitem__(0)
+
+    escogertabla = "usuario"
+    myuser =( (ci.__getitem__(0), ci.__getitem__(1), ci.__getitem__(2), ci.__getitem__(3), ci.__getitem__(4)), )
+    conexion.executemany('INSERT INTO {} VALUES (?,?,?,?,?)'.format(escogertabla), myuser)
+    conexion.commit()
+     
+    conexion.execut('DELET FROM citas WHERE user_name = {%s}, fecha = {%s}, hora = {%s};'%(user_name, fecha, hora))
+    conexion.commit()
+'''
+comprobar_usuario("P")
+#'''

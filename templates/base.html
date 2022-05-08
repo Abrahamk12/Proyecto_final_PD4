@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %}Proyecto Final</title>
+    <title>{% block title %}{% endblock %}</title>
     {% endblock %}
 </head>
 <body>
@@ -13,6 +13,40 @@
         <div name = "Logo">
             <img src="" alt="">
         </div>
+        
+        <div>
+            <ul>
+                {% if session['logged_in'] == True %}
+                <li><a href="/logout/" class="liga_pie">Logout</a></li>
+                {% else %}
+                <li><a href="/" class="liga_pie">Inicio</a></li>
+                <li><a href="/login/" class="liga_pie">Login</a></li>
+                {% endif %}
+            </ul>
+            {% if 'usuario' in session  %}
+                 <div><h3>{{session['usuario']}}</h3></div>
+                 {% set imagen = "/static/avatar/%s.png" % session['usuario'] %}
+                 {% if os.path.exists("."+imagen) %}
+                 <div><img src="{{imagen}}" width="50"></div>
+                 {% else %}
+                 <div><img src="/static/avatar.png" width="50"></div>
+                {% endif %} 
+            {% endif %}
+        </div>
+
     </div>
+    <div>
+        <ul>{% for opcion,url in menu.items() %}
+            <li> <a href="{{url}}"> {{opcion}}</a> </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% block body %}
+{% endblock %}
 </body>
+<footer>
+    {% block footer %}
+    
+    {% endblock %}
+</footer>
 </html>

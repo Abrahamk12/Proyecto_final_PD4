@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrate</title>
+</head>
+{% block body %}
+    <div>
+        <div>
+            <a for="regresar" href="/"> <img src="/static/Regresar.png" alt="" width="2.5%" height="2.5%"> </a>
+        </div>
+        <div>
+            <form action="" method="POST">
+                <div>
+                    <label for="n_competo">Nombre</label>
+                    <input type="text" id="n_competo" name="n_competo" required>
+                </div>
+                <div>
+                    <label for="direccion">Direccion</label>
+                    <input type="text" id="direccion" name="direccion" required> 
+                </div>
+                <div>
+                    <label for="celular">Celular</label>
+                    <input type="int" id="celular" name="celular" required maxlength="10">
+                </div>
+                <div>
+                    <label for="usuario">Nombre de Usuario:</label>
+                    <input type="text" id="usuario" name="usuario" required>
+                </div>
+                <div>
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                
+                <input type="submit" name="enviar" value="Enviar">
+            </form>
+        </div>
+    </div>
+    
+{% endblock %}
+</html>

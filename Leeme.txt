@@ -1,0 +1,22 @@
+Recursos:
+    Enlace de la documentacion: https://unisonmx-my.sharepoint.com/:f:/g/personal/a219223773_unison_mx/EireIJueE3dJsvcM6Jk3H18BH7X2aKB6ITwyxKMsScOpcQ?e=n28iJY
+
+Nota
+Ingresar al drive con su correo institucional, si no es asi, no podran entrar.
+
+Cualquier idea ponerla en el drive, si se agrega algo, comentarlo en el codigo.
+Al hacer modificaciones, cargar el codigo modificado dentro de una ramificacion, 
+aparte agregar un pequeño comentario de que es lo que se hizo 
+
+Documentacion de mysql workbench
+https://dev.mysql.com/doc/connector-python/en/connector-python-examples.html
+
+Base de datos
+-PD4
+-root - creo que la clave es la de tu pc
+para exportar e importar bd: https://www.youtube.com/watch?v=jTs1nSwAcRM&ab_channel=cristianballesteros
+ejemplos de consultas e ingresos de datos en mysql: https://parzibyte.me/blog/2021/03/29/flask-mysql-ejemplo-conexion-crud/
+
+librerias requeridas:
+    pymysql: https://anaconda.org/anaconda/pymysql
+    passlib: https://anaconda.org/anaconda/passlib
