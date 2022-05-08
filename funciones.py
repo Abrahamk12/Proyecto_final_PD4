@@ -11,7 +11,7 @@ class Usuarios():
 
 def conectarse():
     DRIVER_NAME = "Microsoft Access Driver (*.mdb, *.accdb)"
-    DB_PATH  = os.getcwd() + "/PFDBD/pfd.accdb"
+    DB_PATH  = os.getcwd() + "/PFDBD/D.accdb"
     conn = pyodbc.connect("Driver={%s};DBQ=%s;" % (DRIVER_NAME, DB_PATH))
     cursor = conn.cursor()
     return cursor
@@ -24,7 +24,6 @@ def save_user(nombre:str, user_name:str, password:str, direccion:str, celular:in
     conexion.executemany('INSERT INTO {} VALUES (?,?,?,?,?)'.format(escogertabla), myuser)
     #'''
     conexion.commit()
-    conexion.close()
 
 def save_t_user(nombre:str, user_name:str, password:str, roll:str)->None:
     conexion = conectarse()
@@ -32,60 +31,67 @@ def save_t_user(nombre:str, user_name:str, password:str, roll:str)->None:
     myuser =( (id, nombre, user_name, password, roll,), )
     conexion.executemany('INSERT INTO {} VALUES (?,?,?,?)'.format(escogertabla), myuser)
     conexion.commit()
-    conexion.close()
 
 #Referencia de los get: https://parzibyte.me/blog/2021/03/29/flask-mysql-ejemplo-conexion-crud/
 def get_password(user_name:str)->str:
     conexion = conectarse()
-    pas = conexion.execute('SELECT passwrod FROM usuario WHERE usuario = ' + "'" + user_name + "';")
-    conexion.close()
-    return pas
+    conexion.execute('SELECT password FROM usuario WHERE user_name = ' + "'" + user_name + "';")
+    for row in conexion.fetchone():
+        password = row
+    return password
 
 def get_t_password(user_name:str)->str:
     conexion = conectarse()
-    password = conexion.execute('SELECT password FROM usuarios WHERE user_name = ' + "'" + user_name + "';")
-    conexion.close()
-    return password 
+    conexion.execute('SELECT password FROM usuarios WHERE user_name = ' + "'" + user_name + "';")
+    for row in conexion.fetchone():
+        password = row
+    return password
 
 def get_usuario(user_name:str)->str:
     conexion = conectarse()
-    usuario = conexion.execute('SELECT user_name FROM usuario WHERE user_name = ' + "'" + user_name + "';")
-    conexion.close()
+    conexion.execute('SELECT user_name FROM usuario WHERE user_name = ' + "'" + user_name + "';")
+    for row in conexion.fetchone():
+        usuario = row
     return usuario
 
 def get_t_usuario(user_name:str)->str:
     conexion = conectarse()
-    usuario = conexion.execute('SELECT user_name FROM t_usuarios WHERE user_name = ' + "'" + user_name + "';")
-    conexion.close()
+    conexion.execute('SELECT user_name FROM t_usuarios WHERE user_name = ' + "'" + user_name + "';")
+    for row in conexion.fetchone():
+        usuario = row
     return usuario
 
 def get_roll(user_name:str)->str:
     conexion = conectarse()
-    roll = conexion.execute('SELECT roll FROM t_usuarios WHERE user_name = ' + "'" + user_name + "';")
-    conexion.close()
+    conexion.execute('SELECT roll FROM t_usuarios WHERE user_name = ' + "'" + user_name + "';")
+    for row in conexion.fetchone():
+        roll = row
     return roll
 
 def actualizar_password(user_name:str, password: str)->str:
     password_cryp = sha256_crypt.hash(password)
     conexion = conectarse()
     conexion = conexion.execute('UPDATE usuarios SET password =' + "'" + password_cryp + "'" + ' WHERE user_name = ' + "'" + user_name + "';")
-    conexion.close()
 
 def actualizar_t_password(user_name:str, password: str)->str:
     password_cryp = sha256_crypt.hash(password)
     conexion = conectarse()
     conexion.execute('UPDATE t_usuarios SET password =' + "'" + password_cryp + "'" + 'WHERE user_name = ' + "'" + user_name + "';")
-    conexion.close()
 
-def comprobar_usuario(user_name)->list:
+def comprobar_usuario()->list:
+    u = []
     conexion = conectarse()
-    us = conexion.execute('SELECT * FROM usuario;')
-    return us
+    us = conexion.execute('SELECT user_name FROM usuario;')
+    for row in conexion.fetchone():
+        u.append(row)
+    return u
 
 def comprobar_tusuario()->list:
+    u = []
     conexion = conectarse()
     c_usuario = conexion.execute('SELECT user_name FROM usuarios;')
-    conexion.close()
+    for row in conexion.fetchone():
+        u.append(row)
     return c_usuario
 
 def set_roll()->list:
@@ -133,5 +139,5 @@ def save_cita(user_name:str, fecha:str, motivo:str, c_mascotas:int)->None:
     conexion.commit()
     conexion.close()
 '''
-print("Pito ", cwd)
+comprobar_usuario("P")
 #'''

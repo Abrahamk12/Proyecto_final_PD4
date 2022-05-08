@@ -157,12 +157,9 @@ def restart_password():
             usuario = request.form['usuario']
             password = request.form['password']
             c_us = comprobar_usuario()
-            c_tus = comprobar_tusuario()
+            
             if usuario not in c_us:
                 return redirect("/new_user")
-            if usuario in c_tus:
-                password_cryp = sha256_crypt.hash(password)
-                actualizar_t_password(usuario, password_cryp)
             else:
                 actualizar_password(usuario, password)
                 return redirect("/")
@@ -221,8 +218,14 @@ def contraseña_trabajador():
         menu = l_menu(user_in_sesion)
         return render_template('contraseña_trabajador.html', menu = menu)
     if request.method == 'POST':
-        print()
-
+        usuario = request.form['usuario']
+        password = request.form['password']
+        c_tus = comprobar_tusuario()
+        if usuario in c_tus:
+            password_cryp = sha256_crypt.hash(password)
+            actualizar_t_password(usuario, password_cryp)
+            return redirect("/")
+            
 #Apartado Doctor
 @app.route('/d_opciones', methods=['GET','POST'])
 @app.route('/d_opciones/', methods=['GET','POST'])
@@ -285,7 +288,7 @@ def u_restart_p():
                 "Ver citas":"/ver_citas/", 
                 "Ver historial":"/u_vhistorial/", 
                 "Cambiar contraseña":"/u_restart_p/"}
-        return render_template('cambiar_p.html',menu = menu)
+        return render_template('restart_password.html',menu = menu)
     if request.method == 'POST':
         valor = request.form['enviar']
         if valor == 'Enviar':

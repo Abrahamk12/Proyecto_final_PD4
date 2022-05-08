@@ -5,9 +5,9 @@ import os
 registro = {}
 
 def conectarse():
-    con_string = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};' \
-                 r'DBQ=C:\Users\josel\Desktop\Database2.accdb;'
-    conn = pyodbc.connect(con_string)
+    DRIVER_NAME = "Microsoft Access Driver (*.mdb, *.accdb)"
+    DB_PATH  = os.getcwd() + "/PFDBD/D.accdb"
+    conn = pyodbc.connect("Driver={%s};DBQ=%s;" % (DRIVER_NAME, DB_PATH))
     cursor = conn.cursor()
     return cursor
 
