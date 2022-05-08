@@ -179,8 +179,6 @@ def a_opciones():
     if request.method == 'GET':
         menu = l_menu(user_in_sesion)
         return render_template('a_opciones.html', menu = menu)
-    if request.method == 'POST':
-        print()
 
 @app.route('/bd', methods=['GET','POST'])
 @app.route('/bd/', methods=['GET','POST'])
@@ -232,7 +230,7 @@ def contraseña_trabajador():
         if usuario in c_tus:
             password_cryp = sha256_crypt.hash(password)
             actualizar_t_password(usuario, password_cryp)
-            return redirect("/")
+            return redirect("/t_opciones")
             
 #Apartado Doctor
 @app.route('/d_opciones', methods=['GET','POST'])
@@ -241,8 +239,6 @@ def d_opciones():
     if request.method == 'GET':
         menu = l_menu(user_in_sesion)
         return render_template('d_opciones.html', menu = menu)
-    if request.method == 'POST':
-        print()
 
 @app.route('/cita_actual', methods=['GET','POST'])
 @app.route('/cita_actual/', methods=['GET','POST'])
