@@ -56,7 +56,7 @@ def get_t_usuario(user_name:str)->str:
     conexion = conectarse()
     usuario = conexion.execute('SELECT user_name FROM t_usuarios WHERE user_name = ' + "'" + user_name + "';")
     conexion.close()
-    return conexion
+    return usuario
 
 def get_roll(user_name:str)->str:
     conexion = conectarse()
@@ -82,7 +82,6 @@ def comprobar_usuario(user_name)->list:
     return us
 
 def comprobar_tusuario()->list:
-    c_us = []
     conexion = conectarse()
     c_usuario = conexion.execute('SELECT user_name FROM usuarios;')
     conexion.close()
@@ -127,8 +126,9 @@ def l_menu(usuario:str, rol:str)->list:
 
 def save_cita(user_name:str, fecha:str, motivo:str, c_mascotas:int)->None:
     conexion = conectarse()
-    conexion.executemany("INSERT INTO usuarios(user_name, fecha, motivo, c_mascotas)"
-    + "VALUES (" + "'" + user_name + "', '" + fecha + "', '" + motivo + "', '" + c_mascotas +"');")
+    escogertabla = "usuario"
+    myuser =( (user_name, fecha, motivo, c_mascotas), )
+    conexion.executemany('INSERT INTO {} VALUES (?,?,?,?)'.format(escogertabla), myuser)
     conexion.commit()
     conexion.close()
 
