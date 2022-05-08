@@ -101,15 +101,13 @@ def comprobar_usuario(usuario:str)->str:
     conexion.execute('SELECT user_name FROM usuario WHERE user_name = ' + "'" + usuario + "';")
     for row in conexion.fetchone():
         u = row
-        print("\n",u,"\n")
     return u
 
-def comprobar_tusuario()->list:
-    u = []
+def comprobar_tusuario(usuario:str)->list:
     conexion = conectarse()
-    conexion.execute('SELECT user_name FROM usuarios;')
+    conexion.execute('SELECT user_name FROM t_usuarios WHERE user_name = ' + "'" + usuario + "';")
     for row in conexion.fetchone():
-        u.append(row)
+        u = row
     return u
 
 def set_roll()->list:
