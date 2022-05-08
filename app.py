@@ -1,3 +1,13 @@
+#|-----------------------------------------------------------------------------------------------------|
+#|                                       UNIVERSIDAD DE SONORA                                         |
+#|                                           PROYECTO FINAL                                            |
+#|                                       DESARROLLO DE SISTEMAS 4                                      |
+#|                               MAESTRO: FEDERICO MIGUEL CIRETT GALAN                                 |
+#|                                            INTEGRANTES:                                             |
+#|                                    JULIAN FERNANDO FUENTES TRIAS                                    |
+#|                                    URIEL ABRAHAM LOPEZ FLEISCHER                                    |
+#|-----------------------------------------------------------------------------------------------------|
+
 from flask import *
 from funciones import *
 from login import *
