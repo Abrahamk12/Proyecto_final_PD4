@@ -3,12 +3,7 @@
 {% block head %}
 {{super()}}
 {% endblock %}
-<body>
-    <div name="menu">
-        <ul>
-            <li><p>Opcion del menu</p></li>
-        </ul>
-    </div>
+{% block body %}
     <div>
         <form id="a_cita" action="">
             <div>
@@ -32,11 +27,6 @@
             <input type="submit" name="enviar" value="Enviar">
         </form>
     </div>
-</body>
+{% endblock %}
 </html>
 
-<script>
-    function limpiarFormulario() {
-      document.getElementById("a_cita").reset();
-    }
-  </script>
