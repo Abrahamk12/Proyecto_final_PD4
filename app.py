@@ -103,10 +103,8 @@ def new_user():
             celular = request.form['celular']
             password = request.form['password']
             password_cryp = sha256_crypt.hash(password)
-            #c_usuario = comprobar_usuario(usuario)
-            save_user(n_competo, usuario, password_cryp, direccion, celular)
-            return redirect('/login')
-            if usuario != c_usuario:
+            c_usuario = comprobar_usuario(usuario)
+            if usuario is not c_usuario:
                 save_user(n_competo, usuario, password_cryp, direccion, celular)
                 return redirect('/login')
 
