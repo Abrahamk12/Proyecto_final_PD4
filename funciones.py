@@ -27,8 +27,8 @@ def save_user(nombre:str, user_name:str, password:str, direccion:str, celular:st
 
 def save_t_user(nombre:str, user_name:str, password:str, roll:str)->None:
     conexion = conectarse()
-    escogertabla = "t_usuario"
-    myuser =( (id, nombre, user_name, password, roll,), )
+    escogertabla = "t_usuarios"
+    myuser =( (nombre, user_name, password, roll,), )
     conexion.executemany('INSERT INTO {} VALUES (?,?,?,?)'.format(escogertabla), myuser)
     conexion.commit()
 

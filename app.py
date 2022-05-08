@@ -105,7 +105,7 @@ def new_user():
             c_usuario = comprobar_usuario(usuario)
             if usuario is not c_usuario:
                 save_user(n_competo, usuario, password_cryp, direccion, celular)
-                return redirect('/login')
+                return redirect('/')
 
 @app.route('/a_new_user', methods=['GET','POST'])
 @app.route('/a_new_user/', methods=['GET','POST'])
@@ -122,7 +122,7 @@ def a_new_user():
             password = request.form['password']
             password_cryp = sha256_crypt.hash(password)
             save_t_user(n_completo,usuario,password_cryp,roll)
-            return render_template('/')
+            return redirect('/')
             #c_usuario = comprobar_usuario()
             """
             if usuario not in c_usuario:
