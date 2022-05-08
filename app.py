@@ -20,7 +20,6 @@ def index():
         menu = {}
         return render_template("index.html", menu = menu)
     
-
 @app.route('/login', methods=['GET','POST'])
 @app.route('/login/', methods=['GET','POST'])
 def login():

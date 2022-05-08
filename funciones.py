@@ -1,5 +1,6 @@
 from passlib.hash import sha256_crypt
 import pyodbc
+import os, sys
     
 #'''
 class Usuarios():
@@ -9,8 +10,9 @@ class Usuarios():
         self.pasword = pasword
 
 def conectarse():
+    cwd = os.getcwd()
     con_string = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};' \
-                 r'DBQ=C:\Users\super\Documents\Sexto_Semestre\Proyecto_final_PD4\BD\bd.accdb;'
+                 r'DBQ='  + cwd  + '\pfd.accdb;'
     conn = pyodbc.connect(con_string)
     cursor = conn.cursor()
     return cursor
@@ -48,7 +50,7 @@ def get_t_password(user_name:str)->str:
 
 def get_usuario(user_name:str)->str:
     conexion = conectarse()
-    usuario = conexion.execute('SELECT user_name FROM usuarios WHERE user_name = ' + "'" + user_name + "';")
+    usuario = conexion.execute('SELECT user_name FROM usuario WHERE user_name = ' + "'" + user_name + "';")
     conexion.close()
     return usuario
 
@@ -131,4 +133,7 @@ def save_cita(user_name:str, fecha:str, motivo:str, c_mascotas:int)->None:
     conexion.executemany('INSERT INTO {} VALUES (?,?,?,?)'.format(escogertabla), myuser)
     conexion.commit()
     conexion.close()
-
+#'''
+cwd = os.getcwd()
+print("Pito ", r'DBQ='  + cwd  + '\PFDBD\pfd.accdb;')
+#image.png'''
