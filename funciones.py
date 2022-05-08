@@ -68,6 +68,24 @@ def get_roll(user_name:str)->str:
         roll = row
     return roll
 
+def get_historial(user_name)->dict:
+    li = []
+    l = []
+    lis = {"user_name","doctor","diagnostico","receta","fecha"}
+    i = 0
+    conexion = conectarse()
+    conexion.execute('SELECT * FROM citas_atendidas WHERE user_name = ' + "'" + user_name + "';")
+    for row in conexion.fetchall():
+        print(row)
+        li.append(row)
+        print("\Coño ",li.__getitem__(i))
+        l = li.__getitem__(i)
+        li.insert({"user_name":l.__getitem__(0),"doctor":l.__getitem__(1),"diagnostico":l.__getitem__(2),
+        "receta":l.__getitem__(3),"fecha":l.__getitem__(4)})
+        i += 1
+    print(lis)
+    return lis
+
 def actualizar_password(user_name:str, password: str)->str:
     password_cryp = sha256_crypt.hash(password)
     conexion = conectarse()
@@ -131,13 +149,13 @@ def l_menu(usuario:str, rol:str)->list:
         return dmd
     #'''
 
-def save_cita(user_name:str, fecha:str, motivo:str, c_mascotas:int)->None:
+def save_cita(user_name:str, fecha:str, hora:str, motivo:str, c_mascotas:int)->None:
     conexion = conectarse()
     escogertabla = "usuario"
-    myuser =( (user_name, fecha, motivo, c_mascotas), )
-    conexion.executemany('INSERT INTO {} VALUES (?,?,?,?)'.format(escogertabla), myuser)
+    myuser =( (user_name, fecha, hora, motivo, c_mascotas), )
+    conexion.executemany('INSERT INTO {} VALUES (?,?,?,?,?)'.format(escogertabla), myuser)
     conexion.commit()
     conexion.close()
-'''
-comprobar_usuario("P")
+#'''
+get_historial("P")
 #'''

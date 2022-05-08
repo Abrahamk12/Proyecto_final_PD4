@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, request, session
+from flask import *
 from funciones import *
 from login import *
 from passlib.hash import sha256_crypt
@@ -307,7 +307,16 @@ def ver_historial():
                 "Ver citas":"/ver_citas/", 
                 "Ver historial":"/ver_historial/", 
                 "Cambiar contraseña":"/u_restart_p/"}
-        return render_template('ver_historial.html',menu = menu)
+        lista = []
+        datos = get_historial(user_in_sesion)
+        for dato in datos.items():
+            dato['user_name'] = f'<p>{datos["user_name"]}</p>>'
+            dato['doctor'] = f'<p>{datos["doctor"]}</p>>'
+            dato['diagnostico'] = f'<p>{datos["diagnostico"]}</p>>'
+            dato['receta'] = f'<p>{datos["receta"]}</p>>'
+            dato['fecha'] = f'<p>{datos["fecha"]}</p>>'
+            lista.append(dato)
+        return jsonify(lista)
 
 @app.route('/ver_citas', methods=['GET','POST'])
 @app.route('/ver_citas/', methods=['GET','POST'])
