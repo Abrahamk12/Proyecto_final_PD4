@@ -80,8 +80,8 @@ def get_historial(user_name)->dict:
         li.append(row)
         print("\Coño ",li.__getitem__(i))
         l = li.__getitem__(i)
-        li.insert({"user_name":l.__getitem__(0),"doctor":l.__getitem__(1),"diagnostico":l.__getitem__(2),
-        "receta":l.__getitem__(3),"fecha":l.__getitem__(4)})
+        li = {"user_name":l.__getitem__(0),"doctor":l.__getitem__(1),"diagnostico":l.__getitem__(2),
+        "receta":l.__getitem__(3),"fecha":l.__getitem__(4)}
         i += 1
     print(lis)
     return lis
