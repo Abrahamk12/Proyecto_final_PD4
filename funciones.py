@@ -107,10 +107,10 @@ def comprobar_usuario(usuario:str)->str:
 def comprobar_tusuario()->list:
     u = []
     conexion = conectarse()
-    c_usuario = conexion.execute('SELECT user_name FROM usuarios;')
+    conexion.execute('SELECT user_name FROM usuarios;')
     for row in conexion.fetchone():
         u.append(row)
-    return c_usuario
+    return u
 
 def set_roll()->list:
     lr = ["administrador","trabajador","doctor"]
@@ -156,9 +156,26 @@ def save_cita(user_name:str, fecha:str, hora:str, motivo:str, c_mascotas:str)->N
     conexion.executemany('INSERT INTO {} VALUES (?,?,?,?,?)'.format(escogertabla), myuser)
     conexion.commit()
 
-def cambiar_cita(fecha:str, hora:str)->None:
+def cambiar_cita(user_name, fecha:str, hora:str)->None:
     conexion = conectarse()
-    conexion.execut('UPDATE citas SET fecha = {%s}, hora = {%s};'%(fecha, hora))
+    conexion.execut('UPDATE citas SET fecha = {%s}, hora = {%s} WHERE user_name = {%s};'%(fecha, hora, user_name))
+    conexion.commit()
+
+def cancelar_cita(user_name:str, fecha:str, hora:str)->None:
+    c = []
+    ci = []
+    conexion = conectarse()
+    conexion.execute('SELECT * FROM citasWHERE user_name = {%s}, fecha = {%s}, hora = {%s};'%(user_name, fecha, hora))
+    for row in conexion.fetchone():
+        c.append(row)
+        ci = c.__getitem__(0)
+
+    escogertabla = "usuario"
+    myuser =( (ci.__getitem__(0), ci.__getitem__(1), ci.__getitem__(2), ci.__getitem__(3), ci.__getitem__(4)), )
+    conexion.executemany('INSERT INTO {} VALUES (?,?,?,?,?)'.format(escogertabla), myuser)
+    conexion.commit()
+     
+    conexion.execut('DELET FROM citas WHERE user_name = {%s}, fecha = {%s}, hora = {%s};'%(user_name, fecha, hora))
     conexion.commit()
 '''
 comprobar_usuario("P")

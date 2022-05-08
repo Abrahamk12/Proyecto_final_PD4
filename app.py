@@ -143,7 +143,7 @@ def add_new_user_t():
             c_usuario = comprobar_usuario()
             if usuario not in c_usuario:
                 save_t_user(n_completo,usuario,password_cryp,roll)
-                return render_template('/')
+                return render_template('/login_t')
 
 @app.route('/restart_password', methods=['GET','POST'])
 @app.route('/restart_password/', methods=['GET','POST'])
@@ -348,7 +348,7 @@ def cancelar_cita():
             hora = request.form['hora']
             c_usuario = comprobar_usuario(user_in_sesion)
             if user_in_sesion == c_usuario:
-                cambiar_cita(fecha, hora,)
+                cancelar_cita(user_in_sesion, fecha, hora,)
                 return redirect('/agendar_cita')
 
 @app.route('/cambiar_cita', methods=['GET','POST'])
@@ -369,7 +369,7 @@ def cambiar_cita():
             hora = request.form['hora']
             c_usuario = comprobar_usuario(user_in_sesion)
             if user_in_sesion == c_usuario:
-                cambiar_cita(fecha, hora,)
+                cambiar_cita(f<user_in_sesion, fecha, hora,)
                 return redirect('/agendar_cita')
 
 @app.route('/agendar_cita', methods=['GET','POST'])
