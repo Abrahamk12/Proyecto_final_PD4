@@ -341,6 +341,15 @@ def cancelar_cita():
                 "Ver historial":"/ver_historial/", 
                 "Cambiar contraseña":"/u_restart_p/"}
         return render_template('cancelar_cita.html',menu = menu)
+    if request.method == 'POST':
+        valor = request.form['enviar']
+        if valor == 'Enviar':
+            fecha = request.form['fecha']
+            hora = request.form['hora']
+            c_usuario = comprobar_usuario(user_in_sesion)
+            if user_in_sesion == c_usuario:
+                cambiar_cita(fecha, hora,)
+                return redirect('/agendar_cita')
 
 @app.route('/cambiar_cita', methods=['GET','POST'])
 @app.route('/cambiar_cita/', methods=['GET','POST'])
@@ -353,6 +362,15 @@ def cambiar_cita():
                 "Ver historial":"/ver_historial/", 
                 "Cambiar contraseña":"/u_restart_p/"}
         return render_template('cambiar_cita.html',menu = menu)
+    if request.method == 'POST':
+        valor = request.form['enviar']
+        if valor == 'Enviar':
+            fecha = request.form['fecha']
+            hora = request.form['hora']
+            c_usuario = comprobar_usuario(user_in_sesion)
+            if user_in_sesion == c_usuario:
+                cambiar_cita(fecha, hora,)
+                return redirect('/agendar_cita')
 
 @app.route('/agendar_cita', methods=['GET','POST'])
 @app.route('/agendar_cita/', methods=['GET','POST'])
@@ -365,6 +383,18 @@ def agendar_cita():
                 "Ver historial":"/ver_historial/", 
                 "Cambiar contraseña":"/u_restart_p/"}
         return render_template('agendar_cita.html',menu = menu)
+    if request.method == 'POST':
+        valor = request.form['enviar']
+        if valor == 'Enviar':
+            user_name = request.form['usuario']
+            fecha = request.form['fecha']
+            hora = request.form['hora']
+            motivo = request.form['motivo']
+            c_mascotas = request.form['c_mascotas']
+            c_usuario = comprobar_usuario(user_name)
+            if user_name == c_usuario:
+                save_cita(user_name, fecha, hora, motivo, c_mascotas)
+                return redirect('/agendar_cita')
 
 #Cerrar sesion
 @app.route('/logout', methods=['GET'])

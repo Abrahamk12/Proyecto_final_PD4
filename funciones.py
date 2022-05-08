@@ -16,7 +16,7 @@ def conectarse():
     cursor = conn.cursor()
     return cursor
 
-def save_user(nombre:str, user_name:str, password:str, direccion:str, celular:int)->None:
+def save_user(nombre:str, user_name:str, password:str, direccion:str, celular:str)->None:
     conexion = conectarse()
     escogertabla = "usuario"
     #'''
@@ -96,12 +96,12 @@ def actualizar_t_password(user_name:str, password: str)->str:
     conexion = conectarse()
     conexion.execute('UPDATE t_usuarios SET password =' + "'" + password_cryp + "'" + 'WHERE user_name = ' + "'" + user_name + "';")
 
-def comprobar_usuario()->list:
-    u = []
+def comprobar_usuario(usuario:str)->str:
     conexion = conectarse()
-    us = conexion.execute('SELECT user_name FROM usuario;')
+    conexion.execute('SELECT user_name FROM usuario WHERE user_name = ' + "'" + usuario + "';")
     for row in conexion.fetchone():
-        u.append(row)
+        u = row
+        print("\n",u,"\n")
     return u
 
 def comprobar_tusuario()->list:
@@ -149,13 +149,17 @@ def l_menu(usuario:str, rol:str)->list:
         return dmd
     #'''
 
-def save_cita(user_name:str, fecha:str, hora:str, motivo:str, c_mascotas:int)->None:
+def save_cita(user_name:str, fecha:str, hora:str, motivo:str, c_mascotas:str)->None:
     conexion = conectarse()
-    escogertabla = "usuario"
+    escogertabla = "citas"
     myuser =( (user_name, fecha, hora, motivo, c_mascotas), )
     conexion.executemany('INSERT INTO {} VALUES (?,?,?,?,?)'.format(escogertabla), myuser)
     conexion.commit()
-    conexion.close()
-#'''
-get_historial("P")
+
+def cambiar_cita(fecha:str, hora:str)->None:
+    conexion = conectarse()
+    conexion.execut('UPDATE citas SET fecha = {%s}, hora = {%s};'%(fecha, hora))
+    conexion.commit()
+'''
+comprobar_usuario("P")
 #'''

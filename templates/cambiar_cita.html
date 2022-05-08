@@ -4,5 +4,16 @@
 {{super()}}
 {% endblock %}
 {% block body %}
+<div>
+    <form id="cambiar_cita" action=""></form>
+        <div>
+            <label for="fecha">Fecha</label>
+            <input type="date" name="fecha" id="fecha">
+            <label for="hora">Hora</label>
+            <input type="time" name="hora" id="hora">
+        </div>
+    </form>
+    <input type="submit" name="enviar" value="Enviar">
+</div>
 {% endblock %}
 </html>
