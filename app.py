@@ -373,7 +373,7 @@ def cambiar_cita():
             hora = request.form['hora']
             c_usuario = comprobar_usuario(user_in_sesion)
             if user_in_sesion == c_usuario:
-                cambiar_cita(f<user_in_sesion, fecha, hora,)
+                cambiar_cita(user_in_sesion, fecha, hora,)
                 return redirect('/agendar_cita')
 
 @app.route('/agendar_cita', methods=['GET','POST'])
