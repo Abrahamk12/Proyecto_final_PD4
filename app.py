@@ -121,10 +121,14 @@ def a_new_user():
             roll  = request.form['roll']
             password = request.form['password']
             password_cryp = sha256_crypt.hash(password)
-            c_usuario = comprobar_usuario()
+            save_t_user(n_completo,usuario,password_cryp,roll)
+            return render_template('/')
+            #c_usuario = comprobar_usuario()
+            """
             if usuario not in c_usuario:
                 save_t_user(n_completo,usuario,password_cryp,roll)
                 return render_template('/')
+            """
 
 @app.route('/add_new_user_t', methods=['GET','POST'])
 @app.route('/add_new_user_t/', methods=['GET','POST'])
@@ -140,7 +144,7 @@ def add_new_user_t():
             roll  = request.form['roll']
             password = request.form['password']
             password_cryp = sha256_crypt.hash(password)
-            c_usuario = comprobar_tusuario(usuario)
+            #c_usuario = comprobar_tusuario(usuario)
             save_t_user(n_completo,usuario,password_cryp,roll)
             return render_template('/login_t')
             """
